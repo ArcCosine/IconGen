@@ -1,97 +1,107 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-	<meta charset="UTF-8">
-	<title>パズドラ風アイコンジェネレータ</title>
-	<link rel="stylesheet" href="css/app.css">
-	<meta property="og:title" content="パズドラ風アイコンジェネレータ" />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content="http://5509.github.com/IconGen/" />
-	<meta property="og:image" content="http://5509.github.com/IconGen/images/icongen.png" />
-	<script src="js/canvas-to-blob/canvas-to-blob.min.js"></script>
-	<script src="js/html5slider/html5slider.js"></script>
-	<script src="js/IconGen.js"></script>
-	<script src="js/app.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1, width=device-width">
+  <title>パズドラ風アイコンジェネレータ</title>
+  <link rel="stylesheet" href="css/app.css">
+  <meta property="og:title" content="パズドラ風アイコンジェネレータ">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://5509.github.com/IconGen/">
+  <meta property="og:image" content="http://5509.github.com/IconGen/images/icongen.png">
+  <script src="js/canvas-to-blob/canvas-to-blob.min.js"></script>
+  <script src="js/html5slider/html5slider.js"></script>
+  <script src="js/IconGen.js"></script>
+  <script src="js/app.js"></script>
 </head>
 <body class="ig-nojs">
 <script>IconGen.enable();</script>
 
 <div class="main">
 
-	<h1>パズドラ風アイコンジェネレータ</h1>
-	<p>パズル＆ドラゴンズのモンスターアイコンみたいなアイコンジェネレータです。パズドラが好きすぎる人はTwitterとかのアイコンをパズドラ風にしてもっと広めよう（？</p>
+  <h1>パズドラ風アイコンジェネレータ</h1>
+  <p>パズル＆ドラゴンズのモンスターアイコンみたいなアイコンジェネレータです。パズドラが好きすぎる人はTwitterとかのアイコンをパズドラ風にしてもっと広めよう（？</p>
 
-	<p>パズドラって何っていう人は<a href="http://www.gungho.jp/pad/">Webサイト</a>見て、<a href="http://itunes.apple.com/jp/app/pazuru-doragonzu/id493470467?mt=8&uo=4" target="itunes_store">アプリ</a>をインストールするといいです。</p>
+  <p>パズドラって何っていう人は<a href="http://www.gungho.jp/pad/">Webサイト</a>見て、<a href="http://itunes.apple.com/jp/app/pazuru-doragonzu/id493470467?mt=8&uo=4" target="itunes_store">アプリ</a>をインストールするといいです。</p>
 
-	<p>タイトル横のアイコンは<a href="http://www.muteppou.com/">無鉄砲</a>の激うま豚骨ラーメン(★7)です。</p>
+  <p>タイトル横のアイコンは<a href="http://www.muteppou.com/">無鉄砲</a>の激うま豚骨ラーメン(★7)です。</p>
 
-	<div id="ig-main">
-		<div class="ig-notSupport">
-			<p>お使いのブラウザでは利用できません。</p>
-			<p><a href="http://www.google.co.jp/chrome">Google Chrome</a>をインストールして試してみてください。</p>
-		</div>
+  <div id="ig-main">
+    <div class="ig-notSupport">
+      <p>お使いのブラウザでは利用できません。</p>
+      <p><a href="http://www.google.co.jp/chrome">Google Chrome</a>をインストールして試してみてください。</p>
+    </div>
 
-		<div id="ig-drawArea">
-			<div class="ig-drawSize">Size: <input id="ig-drawSize" type="range" value="95" min="16" max="400"></div>
-			<div class="ig-result"><img id="ig-result" src="" alt=""></div>
-			<div id="ig-realSize"></div>
-		</div>
+    <div id="ig-drawArea">
+      <div class="ig-drawSize">Size: <input id="ig-drawSize" type="range" value="95" min="16" max="400"></div>
+      <div class="ig-result"><img id="ig-result" src="" alt=""></div>
+      <div id="ig-realSize"></div>
+    </div>
 
-		<div id="ig-upload">
-			<p>画像ファイルを選択orここにドラッグドロップしてください<br>
-			自動リサイズなどはないので予め正方形にしておくといいです</p>
-			<p><input type="file" id="ig-fileField"></p>
-			<p>※画像サイズが95以上になるとフレームが荒れます</p>
-		</div>
-		<div id="ig-controls">
-			<p class="alt">属性を変更できます</p>
-			<ul>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_flame.png" checked><br><img src="images/pazu_frame_flame.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_flame_water.png"><br><img src="images/pazu_frame_flame_water.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_flame_stone.png"><br><img src="images/pazu_frame_flame_stone.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_flame_light.png"><br><img src="images/pazu_frame_flame_light.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_flame_dark.png"><br><img src="images/pazu_frame_flame_dark.png" width="35"></label></li>
-			</ul>
-			<ul>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_water.png"><br><img src="images/pazu_frame_water.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_water_flame.png"><br><img src="images/pazu_frame_water_flame.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_water_stone.png"><br><img src="images/pazu_frame_water_stone.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_water_light.png"><br><img src="images/pazu_frame_water_light.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_water_dark.png"><br><img src="images/pazu_frame_water_dark.png" width="35"></label></li>
-			</ul>
-			<ul>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_stone.png"><br><img src="images/pazu_frame_stone.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_stone_flame.png"><br><img src="images/pazu_frame_stone_flame.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_stone_water.png"><br><img src="images/pazu_frame_stone_water.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_stone_light.png"><br><img src="images/pazu_frame_stone_light.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_stone_dark.png"><br><img src="images/pazu_frame_stone_dark.png" width="35"></label></li>
-			</ul>
-			<ul>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_light.png"><br><img src="images/pazu_frame_light.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_light_flame.png"><br><img src="images/pazu_frame_light_flame.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_light_water.png"><br><img src="images/pazu_frame_light_water.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_light_stone.png"><br><img src="images/pazu_frame_light_stone.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_light_dark.png"><br><img src="images/pazu_frame_light_dark.png" width="35"></label></li>
-			</ul>
-			<ul>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_dark.png"><br><img src="images/pazu_frame_dark.png" width="35"></label></li>
-				<li><label><input type="radio" name="frame" value="images/pazu_frame_sexy.png"><br><img src="images/pazu_frame_sexy.png" width="35"></label></li>
-			</ul>
-			<p class="btns">
-				<a href="javascript:void(0)" class="download" id="ig-download">ダウンロード</a>
-				<a href="javascript:void(0)" class="reset" id="ig-exit">リセット</a>
-			</p>
-		</div>
+    <div id="ig-upload">
+      <p>画像ファイルを選択orここにドラッグドロップしてください<br>
+      自動リサイズなどはないので予め正方形にしておくといいです</p>
+      <p><input type="file" id="ig-fileField"></p>
+      <p>※画像サイズが95以上になるとフレームが荒れます</p>
+    </div>
+    <div id="ig-controls">
+      <p class="alt">属性を変更できます</p>
+      <ul>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_flame.png" checked><br><img src="images/pazu_frame_flame.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_flame_flame.png"><br><img src="images/pazu_frame_flame_flame.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_flame_water.png"><br><img src="images/pazu_frame_flame_water.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_flame_stone.png"><br><img src="images/pazu_frame_flame_stone.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_flame_light.png"><br><img src="images/pazu_frame_flame_light.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_flame_dark.png"><br><img src="images/pazu_frame_flame_dark.png" width="35"></label></li>
+      </ul>
+      <ul>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_water.png"><br><img src="images/pazu_frame_water.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_water_water.png"><br><img src="images/pazu_frame_water_water.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_water_flame.png"><br><img src="images/pazu_frame_water_flame.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_water_stone.png"><br><img src="images/pazu_frame_water_stone.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_water_light.png"><br><img src="images/pazu_frame_water_light.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_water_dark.png"><br><img src="images/pazu_frame_water_dark.png" width="35"></label></li>
+      </ul>
+      <ul>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_stone.png"><br><img src="images/pazu_frame_stone.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_stone_stone.png"><br><img src="images/pazu_frame_stone_stone.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_stone_flame.png"><br><img src="images/pazu_frame_stone_flame.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_stone_water.png"><br><img src="images/pazu_frame_stone_water.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_stone_light.png"><br><img src="images/pazu_frame_stone_light.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_stone_dark.png"><br><img src="images/pazu_frame_stone_dark.png" width="35"></label></li>
+      </ul>
+      <ul>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_light.png"><br><img src="images/pazu_frame_light.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_light_light.png"><br><img src="images/pazu_frame_light_light.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_light_flame.png"><br><img src="images/pazu_frame_light_flame.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_light_water.png"><br><img src="images/pazu_frame_light_water.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_light_stone.png"><br><img src="images/pazu_frame_light_stone.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_light_dark.png"><br><img src="images/pazu_frame_light_dark.png" width="35"></label></li>
+      </ul>
+      <ul>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_dark.png"><br><img src="images/pazu_frame_dark.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_dark_dark.png"><br><img src="images/pazu_frame_dark_dark.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_dark_stone.png"><br><img src="images/pazu_frame_dark_stone.png" width="35"></label></li>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_dark_light.png"><br><img src="images/pazu_frame_dark_light.png" width="35"></label></li>
+      </ul>
+      <ul>
+        <li><label><input type="radio" name="frame" value="images/pazu_frame_sexy.png"><br><img src="images/pazu_frame_sexy.png" width="35"></label></li>
+      </ul>
+      <p class="btns">
+        <a href="javascript:void(0)" class="download" id="ig-download">ダウンロード</a>
+        <a href="javascript:void(0)" class="reset" id="ig-exit">リセット</a>
+      </p>
+    </div>
 
-	</div>
+  </div>
 
-	<div class="share">
-		<iframe src="http://www.facebook.com/plugins/like.php?href=5509.github.com%2FIconGen%2F&amp;layout=button_count&amp;show_faces=false&amp;width=90&amp;action=like&amp;colorscheme=light&amp;height=20" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:20px;" allowTransparency="true"></iframe>
-		<g:plusone size="medium" href="5509.github.com/IconGen/"></g:plusone><script type="text/javascript">(function(){var po=document.createElement("script");po.type="text/javascript";po.async=true;po.src="https://apis.google.com/js/plusone.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(po,s);})();</script>
-		<a href="https://twitter.com/share" class="twitter-share-button" data-text="パズドラ風アイコンジェネレータ" data-lang="ja" data-hashtags="パズドラ">ツイート</a>
-		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>	</div>
+  <div class="share">
+    <iframe src="http://www.facebook.com/plugins/like.php?href=5509.github.com%2FIconGen%2F&amp;layout=button_count&amp;show_faces=false&amp;width=90&amp;action=like&amp;colorscheme=light&amp;height=20" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:20px;" allowTransparency="true"></iframe>
+    <g:plusone size="medium" href="5509.github.com/IconGen/"></g:plusone><script type="text/javascript">(function(){var po=document.createElement("script");po.type="text/javascript";po.async=true;po.src="https://apis.google.com/js/plusone.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(po,s);})();</script>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-text="パズドラ風アイコンジェネレータ" data-lang="ja" data-hashtags="パズドラ">ツイート</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>  </div>
 
-	<p class="copy"><small><a href="http://twitter.com/5509">@5509</a>, <a href="https://github.com/rewish/IconGen">IconGen</a>(<a href="http://twitter.com/rewish">@rewish</a>), <a href="http://twitter.com/shimael">@shimael</a>(Sexy pink)</small></p>
+  <p class="copy"><small><a href="http://twitter.com/5509">@5509</a>, <a href="https://github.com/rewish/IconGen">IconGen</a>(<a href="http://twitter.com/rewish">@rewish</a>), <a href="http://twitter.com/shimael">@shimael</a>(Sexy pink)</small></p>
 
 </div>
 
