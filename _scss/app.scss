@@ -45,7 +45,7 @@ p {
 }
 
 #ig-main {
-  width: 400px;
+  width: 430px;
   margin: 0 auto 10px;
   padding: 20px;
   @include border-radius('10px');
@@ -83,18 +83,44 @@ p {
   padding: 0;
 
   .alt {
-    margin: 0 0 0 40px;
-    padding-top: 10px;
+    margin: 0 0 0 20px;
+    padding: 10px 0 10px 33px;
+    background-repeat: no-repeat;
+    background-position: left center;
+  }
+
+  .alt-flame {
+    background-image: url(../images/icon_flame.png);
+  }
+  .alt-water {
+    background-image: url(../images/icon_water.png);
+  }
+  .alt-stone {
+    background-image: url(../images/icon_stone.png);
+  }
+  .alt-light {
+    background-image: url(../images/icon_light.png);
+  }
+  .alt-dark {
+    background-image: url(../images/icon_dark.png);
+  }
+  .alt-sexy {
+    background-image: url(../images/icon_sexy.png);
   }
 
   ul {
-    margin-top: 0;
+    margin: 0;
+    padding-left: 20px;
   }
 
   li {
     display: inline-block;
     margin-right: 20px;
     text-align: center;
+
+    &:last-child {
+      margin-right: 0;
+    }
 
     input {
       position: relative;
@@ -123,6 +149,7 @@ p {
 }
 
 .btns {
+  margin-top: 2em;
   text-align: center;
 }
 
