@@ -87,6 +87,11 @@ p {
     padding: 10px 0 10px 33px;
     background-repeat: no-repeat;
     background-position: left center;
+    line-height: 1.1;
+
+    span {
+      font-size: 10px;
+    }
   }
 
   .alt-flame {
