@@ -1,4 +1,4 @@
-/* normalize.css 2011-09-22T17:42 UTC - http://github.com/necolas/normalize.css */
+/*! normalize.css 2011-09-22T17:42 UTC - http://github.com/necolas/normalize.css */
 /* =============================================================================
    HTML5 display definitions
    ========================================================================== */
@@ -472,12 +472,14 @@ p {
     background-image: url(../images/icon_dark.png); }
   #ig-controls .alt-sexy {
     background-image: url(../images/icon_sexy.png); }
+  #ig-controls .alt-ojama {
+    background-image: url(../images/icon_ojama.png); }
   #ig-controls ul {
     margin: 0;
     padding-left: 20px; }
   #ig-controls li {
     display: inline-block;
-    margin-right: 20px;
+    margin-right: 11px;
     text-align: center; }
     #ig-controls li:last-child {
       margin-right: 0; }
