@@ -581,13 +581,15 @@ style
     margin-bottom: 1em;
   }
   .news {
-    padding: 15px 0;
+    padding: 10px 0;
     font-weight: bold;
     dt {
+      padding-top: 5px;
       float: left;
     }
     dd {
-      margin-left: 80px;
+      margin-left: 90px;
+      padding-top: 5px;
     }
   }
   .sns_btn {
