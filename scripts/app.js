@@ -179,7 +179,8 @@
       'click a[data-pig-sub-frame]': '_onClickFrame',
       'change input[type="file"]': '_onChangeFile',
       'change input[type="range"]': '_onChangeScale',
-      'keyup input[type="text"]': '_onKeyupText'
+      'keyup input[type="number"]': '_onChangeText',
+      'change input[type="number"]': '_onChangeText'
     };
 
     App.prototype.initialize = function() {
@@ -268,7 +269,7 @@
       return this.model.set('scale', scale);
     };
 
-    App.prototype._onKeyupText = function(ev) {
+    App.prototype._onChangeText = function(ev) {
       var $input, mode, value;
       $input = $(ev.target).closest('input');
       mode = $input.data('pig-mode');

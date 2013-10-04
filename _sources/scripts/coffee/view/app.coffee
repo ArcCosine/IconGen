@@ -5,7 +5,8 @@ class PIG.View.App extends Backbone.View
     'click a[data-pig-sub-frame]' : '_onClickFrame'
     'change input[type="file"]'   : '_onChangeFile'
     'change input[type="range"]'  : '_onChangeScale'
-    'keyup input[type="text"]'  : '_onKeyupText'
+    'keyup input[type="number"]'  : '_onChangeText'
+    'change input[type="number"]' : '_onChangeText'
   }
 
   initialize: ->
@@ -91,7 +92,7 @@ class PIG.View.App extends Backbone.View
 
     @model.set('scale', scale)
 
-  _onKeyupText: (ev) ->
+  _onChangeText: (ev) ->
     $input = $(ev.target).closest('input')
     mode = $input.data('pig-mode')
     value = parseInt($input.val())
