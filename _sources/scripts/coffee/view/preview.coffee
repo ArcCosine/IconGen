@@ -32,7 +32,7 @@ class PIG.View.Preview extends Backbone.View
         .on('touchmove', 'canvas', (ev) =>
           @_onDragMove(ev)
         )
-        .on('touchEnd', 'canvas', (ev) =>
+        .on('touchend', 'canvas', (ev) =>
           @_onDragEnd(ev)
         )
     else

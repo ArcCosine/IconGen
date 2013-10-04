@@ -353,7 +353,7 @@
           return _this._onDragStart(ev);
         }).on('touchmove', 'canvas', function(ev) {
           return _this._onDragMove(ev);
-        }).on('touchEnd', 'canvas', function(ev) {
+        }).on('touchend', 'canvas', function(ev) {
           return _this._onDragEnd(ev);
         });
       } else {
