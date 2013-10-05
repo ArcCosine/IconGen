@@ -60,6 +60,9 @@
     App.prototype.initialize = function() {
       var webfontText,
         _this = this;
+      if (typeof window.FileReader === 'undefined') {
+        return $('body').html(this.notSupported);
+      }
       if (PIG.isMobile()) {
         $('html').addClass('sp');
       }
@@ -75,6 +78,8 @@
         return view = new PIG.View.App();
       });
     };
+
+    App.prototype.notSupported = '<div class="not-supported">\n  <p>パズドラ風アイコンジェネレーターは<br>\n  お使いの端末には対応していません。<br>\n  対応端末は以下の通りです。</p>\n  <h3>PC/Mac</h3>\n  <ul>\n    <li>Google Chromeの最新版</li>\n    <li>Safariの最新版</li>\n    <li>Firefoxの最新版</li>\n  </ul>\n  <h3>モバイル端末</h3>\n  <ul>\n    <li>iOS6以上のSafari</li>\n    <li>Android4.x以上の標準ブラウザ</li>\n  </ul>\n  <p>お手数ですが、対応端末でご利用ください。</p>\n</div>';
 
     return App;
 
