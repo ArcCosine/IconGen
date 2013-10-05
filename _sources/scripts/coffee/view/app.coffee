@@ -41,9 +41,8 @@ class PIG.View.App extends Backbone.View
 
   _initReader: ->
     @reader = new FileReader()
-    @reader.addEventListener('load', =>
+    @reader.onload = =>
       @_onLoadReader()
-    , false)
 
   _onLoadReader: ->
     @model.set('iconSrc', @reader.result)

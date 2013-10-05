@@ -214,9 +214,9 @@
     App.prototype._initReader = function() {
       var _this = this;
       this.reader = new FileReader();
-      return this.reader.addEventListener('load', function() {
+      return this.reader.onload = function() {
         return _this._onLoadReader();
-      }, false);
+      };
     };
 
     App.prototype._onLoadReader = function() {
