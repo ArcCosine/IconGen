@@ -66,7 +66,7 @@
       if (PIG.isMobile()) {
         $('html').addClass('sp');
       }
-      webfontText = 'Lv.0123456789最大+ダウンロードお@shimaelrw写真をえらぶ拡待ちくださいアイコンの大きフレームを外す';
+      webfontText = 'Lv.0123456789最大+ダウンロードお@shimaelrw写真をえらぶ拡待ちくださいアイコンの大きフレーム外す';
       return FONTPLUS.load([
         {
           fontname: 'KurokaneStd-EB',
