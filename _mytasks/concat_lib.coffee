@@ -23,6 +23,8 @@ module.exports = (grunt) ->
       dest: 'scripts/lib.js'
     }
     app: {
+      options:
+        banner: '<%= banner %>'
       src: [
         'scripts/tmp/app/*.js'
         'scripts/tmp/controller/base.js'

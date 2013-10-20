@@ -1,9 +1,14 @@
 {
-  "name": "PuzzIconGen",
+  "name": "IconGen for Puzzle & Dragons",
   "author": "Kazunori Tokuda",
   "email": "norimania@gmail.com",
+  "url": "http://5509.github.io/IconGen",
   "repository": "https://github.com/5509/IconGen",
-  "version": "2.0.0",
+  "version": "2.1.3",
+  "license": {
+    "type": "MIT",
+    "url": "http://5509.mit-license.org/"
+   },
   "devDependencies": {
     "grunt": "~0.4.0",
     "grunt-contrib-concat": "~0.3.0",

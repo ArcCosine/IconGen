@@ -1,3 +1,6 @@
+/*! IconGen for Puzzle & Dragons - v2.1.3 - 2013-10-20 17:34:34
+http://5509.github.io/IconGen * Copyright (c) 2013 Kazunori Tokuda;
+Licensed under the MIT http://5509.mit-license.org/ */
 (function() {
   window.PIG = {};
 
