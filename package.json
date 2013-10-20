@@ -2,7 +2,7 @@
   "name": "PuzzIconGen",
   "author": "Kazunori Tokuda",
   "email": "norimania@gmail.com",
-  "repository": "https://github.com/5509/PuzzIconGen",
+  "repository": "https://github.com/5509/IconGen",
   "version": "2.0.0",
   "devDependencies": {
     "grunt": "~0.4.0",
