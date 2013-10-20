@@ -1,13 +1,14 @@
 class PIG.View.App extends Backbone.View
 
   events: {
-    'click a[data-pig-frame]'     : '_onClickMainAttr'
-    'click a[data-pig-sub-frame]' : '_onClickFrame'
-    'change input[type="file"]'   : '_onChangeFile'
-    'change input[type="range"]'  : '_onChangeScale'
-    'keyup input[type="number"]'  : '_onChangeText'
-    'change input[type="number"]' : '_onChangeText'
-    'change select[name="size"]'  : '_onChangeSize'
+    'click a[data-pig-frame]'       : '_onClickMainAttr'
+    'click a[data-pig-sub-frame]'   : '_onClickFrame'
+    'change input[type="file"]'     : '_onChangeFile'
+    'change input[type="range"]'    : '_onChangeScale'
+    'keyup input[type="number"]'    : '_onChangeText'
+    'change input[type="number"]'   : '_onChangeText'
+    'change select[name="size"]'    : '_onChangeSize'
+    'change input[type="checkbox"]' : '_onClickNoFrame'
   }
 
   initialize: ->
@@ -126,3 +127,9 @@ class PIG.View.App extends Backbone.View
     else if ( value )
       @model.set('mode', mode)
       @model.set('value', value)
+
+  _onClickNoFrame: (ev) ->
+    $input = $(ev.target).closest('input')
+    checked = $input.prop('checked')
+
+    @model.set('noFrame', checked)

@@ -66,7 +66,7 @@
       if (PIG.isMobile()) {
         $('html').addClass('sp');
       }
-      webfontText = 'Lv.0123456789最大+ダウンロードお@shimaelrw写真をえらぶ拡待ちくださいアイコンの大き';
+      webfontText = 'Lv.0123456789最大+ダウンロードお@shimaelrw写真をえらぶ拡待ちくださいアイコンの大きフレームを外す';
       return FONTPLUS.load([
         {
           fontname: 'KurokaneStd-EB',
@@ -116,7 +116,8 @@
         y: 0
       },
       frameSrc: null,
-      iconFrameImage: null
+      iconFrameImage: null,
+      noFrame: false
     };
 
     App.prototype.initialize = function() {
@@ -133,6 +134,9 @@
       this.on('change:sub', function() {
         return this._setFramePath();
       });
+      this.on('change:noFrame', function() {
+        return this._setFramePath();
+      });
       this.on('change:file', function() {
         return this.set('type', this.get('file').type);
       });
@@ -147,6 +151,11 @@
 
     App.prototype._setFramePath = function(options) {
       var main, path, sub;
+      if (this.get('noFrame')) {
+        path = 'images/noframe.png';
+        this.set('path', path, options);
+        return;
+      }
       main = this.get('main');
       sub = this.get('sub');
       if (main === sub) {
@@ -186,7 +195,8 @@
       'change input[type="range"]': '_onChangeScale',
       'keyup input[type="number"]': '_onChangeText',
       'change input[type="number"]': '_onChangeText',
-      'change select[name="size"]': '_onChangeSize'
+      'change select[name="size"]': '_onChangeSize',
+      'change input[type="checkbox"]': '_onClickNoFrame'
     };
 
     App.prototype.initialize = function() {
@@ -317,6 +327,13 @@
       }
     };
 
+    App.prototype._onClickNoFrame = function(ev) {
+      var $input, checked;
+      $input = $(ev.target).closest('input');
+      checked = $input.prop('checked');
+      return this.model.set('noFrame', checked);
+    };
+
     return App;
 
   })(Backbone.View);
@@ -410,8 +427,11 @@
       this.listenTo(this.model, 'change:ready', function() {
         return $('.loading').fadeOut(500);
       });
-      return this.listenTo(this.model, 'change:size', function() {
+      this.listenTo(this.model, 'change:size', function() {
         _this.icon_size = _this.model.get('size');
+        return _this._drawIcon();
+      });
+      return this.listenTo(this.model, 'change:noFrame', function() {
         return _this._drawIcon();
       });
     };

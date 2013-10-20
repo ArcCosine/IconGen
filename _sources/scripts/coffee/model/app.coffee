@@ -16,6 +16,7 @@ class PIG.Model.App extends Backbone.Model
     }
     frameSrc       : null
     iconFrameImage : null
+    noFrame        : false
   }
 
   initialize: ->
@@ -30,6 +31,9 @@ class PIG.Model.App extends Backbone.Model
     @on 'change:sub', ->
       @_setFramePath()
 
+    @on 'change:noFrame', ->
+      @_setFramePath()
+
     @on 'change:file', ->
       @set('type', @get('file').type)
 
@@ -39,6 +43,11 @@ class PIG.Model.App extends Backbone.Model
         @set('mode', null)
 
   _setFramePath: (options) ->
+    if ( @get('noFrame') )
+      path = 'images/noframe.png'
+      @set('path', path, options)
+      return
+
     main = @get('main')
     sub = @get('sub')
 

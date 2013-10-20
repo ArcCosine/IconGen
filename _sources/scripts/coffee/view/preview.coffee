@@ -97,6 +97,10 @@ class PIG.View.Preview extends Backbone.View
       @_drawIcon()
     )
 
+    @listenTo(@model, 'change:noFrame', =>
+      @_drawIcon()
+    )
+
   _getCanvasAdjust: ->
     return if @icon_size is 180 then 11 else 6
 
