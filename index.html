@@ -79,8 +79,16 @@
   </div>
   <div class="select_photo"><input type="file"></div>
   <div class="scale_photo"><span>拡大</span><input type="range" min="1" max="10" step="0.1" value="1"></div>
-  <div class="input_plus"><span>+</span><input type="number" min="1" max="297" data-pig-mode="plus"></div>
-  <div class="input_level"><span>Lv</span><input type="number" min="1" max="99" data-pig-mode="lv"></div>
+  <div class="input_group">
+    <div class="input_plus"><span>+</span><input type="number" min="1" max="297" data-pig-mode="plus"></div>
+    <div class="input_level"><span>Lv</span><input type="number" min="1" max="99" data-pig-mode="lv"></div>
+  </div>
+  <div class="select_size">
+    <span>アイコンの大きさ</span> <select name="size">
+    <option value="180" selected>180x180</option>
+    <option value="98">98x98</option>
+    </select>
+  </div>
   <div class="btn_download disabled"><a href="javascript:void(0)" class="download">ダウンロード</a></div>
 </div><!-- // App -->
 
@@ -106,6 +114,8 @@
   <div class="inner">
     <p>パズル＆ドラゴンズのモンスターアイコンみたいなアイコンジェネレータです。Twitterのアイコン等に使ってね。</p>
     <dl class="news">
+      <dt>2013-10-20</dt>
+      <dd>デフォルトのアイコンサイズを180x180(+かLvオプションがある場合は191x191)に変更しました。今まで通りの98x98(+かLvオプションがある場合は104x104)も選べます。</dd>
       <dt>2013-10-06</dt>
       <dd>Android4.x系の端末で動作するようになりました。</dd>
       <dt>2013-10-01</dt>

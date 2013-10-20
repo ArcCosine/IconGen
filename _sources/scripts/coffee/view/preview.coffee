@@ -4,9 +4,7 @@ class PIG.View.Preview extends Backbone.View
   className: 'mod-preview'
 
   CANVAS_SIZE: 98
-  ICON_SIZE: 98
-  CANVAS_HAS_TEXT_SIZE: 104
-  CANVAS_HASNT_TEXT_SIZE: 98
+  icon_size: 180
 
   initialize: (attr) ->
 
@@ -94,6 +92,17 @@ class PIG.View.Preview extends Backbone.View
       $('.loading').fadeOut(500)
     )
 
+    @listenTo(@model, 'change:size', =>
+      @icon_size = @model.get('size')
+      @_drawIcon()
+    )
+
+  _getCanvasAdjust: ->
+    return if @icon_size is 180 then 11 else 6
+
+  _isLarge: ->
+    return @icon_size is 180
+
   _getClientPos: (ev) ->
     # originalEventに元のeventが入っている
     ev = ev.originalEvent
@@ -138,10 +147,12 @@ class PIG.View.Preview extends Backbone.View
     }
     iconPos = @model.get('iconPos')
 
-    @model.set('iconPos', {
-      x: iconPos.x + dragDiff.x
-      y: iconPos.y + dragDiff.y
-    })
+    pos = {
+      x: iconPos.x + if @_isLarge() then dragDiff.x * 2 else dragDiff.x
+      y: iconPos.y + if @_isLarge() then dragDiff.y * 2 else dragDiff.y
+    }
+
+    @model.set('iconPos', pos)
 
     @dragStartEv = dragEndPos
 
@@ -195,27 +206,27 @@ class PIG.View.Preview extends Backbone.View
     base = undefined
     getFitProp = =>
       if ( @model.get('mode') )
-        canvas_size = @CANVAS_HAS_TEXT_SIZE
+        canvas_size = @icon_size + @_getCanvasAdjust()
       else
-        canvas_size = @CANVAS_HASNT_TEXT_SIZE
+        canvas_size = @icon_size
       ctx.clearRect(0, 0, canvas_size, canvas_size)
-      adjust = if 98 < canvas_size then (canvas_size - @ICON_SIZE) / 2 else 0
+      adjust = if 98 < canvas_size then (canvas_size - @icon_size) / 2 else 0
       base = width < height
       if ( base )
-        fitWidth = width * @ICON_SIZE / height * scale
-        fitHeight = @ICON_SIZE * scale
+        fitWidth = width * @icon_size / height * scale
+        fitHeight = @icon_size * scale
         fitPosTop = 0
-        fitPosLeft = @ICON_SIZE / 2 - fitWidth / 2 + adjust
+        fitPosLeft = @icon_size / 2 - fitWidth / 2 + adjust
 
-        space = (@ICON_SIZE - fitWidth) / 2
+        space = (@icon_size - fitWidth) / 2
         pos = space + fitWidth
       else
-        fitWidth = @ICON_SIZE * scale
-        fitHeight = height * @ICON_SIZE / width * scale
-        fitPosTop = @ICON_SIZE / 2 - fitHeight / 2
+        fitWidth = @icon_size * scale
+        fitHeight = height * @icon_size / width * scale
+        fitPosTop = @icon_size / 2 - fitHeight / 2
         fitPosLeft = adjust
 
-        space = (@ICON_SIZE - fitHeight) / 2
+        space = (@icon_size - fitHeight) / 2
         pos = space + fitHeight
 
     if ( not icon || not frame )
@@ -238,11 +249,11 @@ class PIG.View.Preview extends Backbone.View
 
       # 写真周りの白縁
       if ( base )
-        ctx.fillRect(0, 0, space, @ICON_SIZE)
-        ctx.fillRect(pos, 0, space, @ICON_SIZE)
+        ctx.fillRect(0, 0, space, @icon_size)
+        ctx.fillRect(pos, 0, space, @icon_size)
       else
-        ctx.fillRect(0, 0, @ICON_SIZE, space)
-        ctx.fillRect(0, pos, @ICON_SIZE, space)
+        ctx.fillRect(0, 0, @icon_size, space)
+        ctx.fillRect(0, pos, @icon_size, space)
     else
       getFitProp()
       movedX = iconPos.x
@@ -254,12 +265,12 @@ class PIG.View.Preview extends Backbone.View
 
     if ( adjust isnt 0 )
       ctx.fillStyle = '#ffffff'
-      ctx.fillRect(0, 0, (canvas_size - @ICON_SIZE) / 2, @ICON_SIZE)
-      ctx.fillRect(canvas_size - (canvas_size - @ICON_SIZE) / 2, 0, (canvas_size - @ICON_SIZE) / 2, @ICON_SIZE)
-      ctx.fillRect(0, @ICON_SIZE, canvas_size, canvas_size - @ICON_SIZE)
+      ctx.fillRect(0, 0, (canvas_size - @icon_size) / 2, @icon_size)
+      ctx.fillRect(canvas_size - (canvas_size - @icon_size) / 2, 0, (canvas_size - @icon_size) / 2, @icon_size)
+      ctx.fillRect(0, @icon_size, canvas_size, canvas_size - @icon_size)
 
     # フレームのレンダリング
-    ctx.drawImage(frame, adjust, 0, @ICON_SIZE, @ICON_SIZE)
+    ctx.drawImage(frame, adjust, 0, @icon_size, @icon_size)
 
     @_onRenderText()
     @_createFile()
@@ -306,16 +317,19 @@ class PIG.View.Preview extends Backbone.View
   _onRenderText: ->
     mode = @model.get('mode')
     value = @model.get("value")
-    canvas_size = @CANVAS_HAS_TEXT_SIZE
+    canvas_size = @icon_size + @_getCanvasAdjust()
+    fontSize = if @icon_size is 98 then 22 else 40
     ctx = @ctx
-    ctx.font = "22px kurokane"
+    ctx.font = "#{fontSize}px kurokane"
     ctx.textAlign = 'center'
     frontFillStyle = '#f0ff00'
     ctx.shadowColor = '#000000'
     ctx.shadowBlur = 0
 
     if ( not mode )
+      @canvas.setAttribute('class', 'default')
       return
+    @canvas.setAttribute('class', 'large')
 
     if ( mode is 'lv' )
       if ( value is 99 )

@@ -7,6 +7,7 @@ class PIG.View.App extends Backbone.View
     'change input[type="range"]'  : '_onChangeScale'
     'keyup input[type="number"]'  : '_onChangeText'
     'change input[type="number"]' : '_onChangeText'
+    'change select[name="size"]'  : '_onChangeSize'
   }
 
   initialize: ->
@@ -90,6 +91,12 @@ class PIG.View.App extends Backbone.View
     scale = parseFloat($range.val())
 
     @model.set('scale', scale)
+
+  _onChangeSize: (ev) ->
+    $size = $(ev.target).closest('select')
+    size = parseInt($size.val())
+
+    @model.set('size', size)
 
   _onChangeText: (ev) ->
     $input = $(ev.target).closest('input')

@@ -213,6 +213,17 @@ style
     top: 0;
     left: 50%;
     text-align: center;
+
+    canvas {
+      &.default {
+        width: 98px;
+        height: 98px;
+      }
+      &.large {
+        width: 104px;
+        height: 104px;
+      }
+    }
   }
   .frame_double {
     top: 4px;
@@ -519,8 +530,13 @@ style
     font-family: 'kurokane';
   }
 }
+
+.input_group {
+  text-align: center;
+}
 .input_plus, .input_level {
   margin: 0 auto 5px auto;
+  display: inline-block;
   width: 105px;
   span {
     padding-top: 3px;
@@ -546,6 +562,14 @@ style
 }
 .input_level {
   margin-bottom: 15px;
+}
+.select_size {
+  padding-bottom: 15px;
+  text-align: center;
+
+  span {
+    font-family: 'kurokane';
+  }
 }
 .btn_download > a{
   margin: 0 auto 30px auto;

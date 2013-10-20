@@ -8,7 +8,7 @@ class PIG.Controller.App extends PIG.Controller.Base
     if ( PIG.isMobile() )
       $('html').addClass('sp')
 
-    webfontText = 'Lv.0123456789最大+ダウンロードお@shimaelrw写真をえらぶ拡待ちください'
+    webfontText = 'Lv.0123456789最大+ダウンロードお@shimaelrw写真をえらぶ拡待ちくださいアイコンの大き'
 
     # KurokaneStd-EBサブセットの読み込み
     FONTPLUS.load([

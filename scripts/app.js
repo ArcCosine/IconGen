@@ -66,7 +66,7 @@
       if (PIG.isMobile()) {
         $('html').addClass('sp');
       }
-      webfontText = 'Lv.0123456789最大+ダウンロードお@shimaelrw写真をえらぶ拡待ちください';
+      webfontText = 'Lv.0123456789最大+ダウンロードお@shimaelrw写真をえらぶ拡待ちくださいアイコンの大き';
       return FONTPLUS.load([
         {
           fontname: 'KurokaneStd-EB',
@@ -185,7 +185,8 @@
       'change input[type="file"]': '_onChangeFile',
       'change input[type="range"]': '_onChangeScale',
       'keyup input[type="number"]': '_onChangeText',
-      'change input[type="number"]': '_onChangeText'
+      'change input[type="number"]': '_onChangeText',
+      'change select[name="size"]': '_onChangeSize'
     };
 
     App.prototype.initialize = function() {
@@ -274,6 +275,13 @@
       return this.model.set('scale', scale);
     };
 
+    App.prototype._onChangeSize = function(ev) {
+      var $size, size;
+      $size = $(ev.target).closest('select');
+      size = parseInt($size.val());
+      return this.model.set('size', size);
+    };
+
     App.prototype._onChangeText = function(ev) {
       var $input, mode, value;
       $input = $(ev.target).closest('input');
@@ -334,11 +342,7 @@
 
     Preview.prototype.CANVAS_SIZE = 98;
 
-    Preview.prototype.ICON_SIZE = 98;
-
-    Preview.prototype.CANVAS_HAS_TEXT_SIZE = 104;
-
-    Preview.prototype.CANVAS_HASNT_TEXT_SIZE = 98;
+    Preview.prototype.icon_size = 180;
 
     Preview.prototype.initialize = function(attr) {
       this.dragStart = false;
@@ -403,9 +407,25 @@
         }
         return _this._drawIcon();
       });
-      return this.listenTo(this.model, 'change:ready', function() {
+      this.listenTo(this.model, 'change:ready', function() {
         return $('.loading').fadeOut(500);
       });
+      return this.listenTo(this.model, 'change:size', function() {
+        _this.icon_size = _this.model.get('size');
+        return _this._drawIcon();
+      });
+    };
+
+    Preview.prototype._getCanvasAdjust = function() {
+      if (this.icon_size === 180) {
+        return 11;
+      } else {
+        return 6;
+      }
+    };
+
+    Preview.prototype._isLarge = function() {
+      return this.icon_size === 180;
     };
 
     Preview.prototype._getClientPos = function(ev) {
@@ -439,7 +459,7 @@
     };
 
     Preview.prototype._onDragMove = function(ev) {
-      var dragDiff, dragEndPos, iconPos;
+      var dragDiff, dragEndPos, iconPos, pos;
       ev.preventDefault();
       if (!this.dragStart) {
         return;
@@ -450,10 +470,11 @@
         y: dragEndPos.y - this.dragStartEv.y
       };
       iconPos = this.model.get('iconPos');
-      this.model.set('iconPos', {
-        x: iconPos.x + dragDiff.x,
-        y: iconPos.y + dragDiff.y
-      });
+      pos = {
+        x: iconPos.x + (this._isLarge() ? dragDiff.x * 2 : dragDiff.x),
+        y: iconPos.y + (this._isLarge() ? dragDiff.y * 2 : dragDiff.y)
+      };
+      this.model.set('iconPos', pos);
       return this.dragStartEv = dragEndPos;
     };
 
@@ -515,26 +536,26 @@
       base = void 0;
       getFitProp = function() {
         if (_this.model.get('mode')) {
-          canvas_size = _this.CANVAS_HAS_TEXT_SIZE;
+          canvas_size = _this.icon_size + _this._getCanvasAdjust();
         } else {
-          canvas_size = _this.CANVAS_HASNT_TEXT_SIZE;
+          canvas_size = _this.icon_size;
         }
         ctx.clearRect(0, 0, canvas_size, canvas_size);
-        adjust = 98 < canvas_size ? (canvas_size - _this.ICON_SIZE) / 2 : 0;
+        adjust = 98 < canvas_size ? (canvas_size - _this.icon_size) / 2 : 0;
         base = width < height;
         if (base) {
-          fitWidth = width * _this.ICON_SIZE / height * scale;
-          fitHeight = _this.ICON_SIZE * scale;
+          fitWidth = width * _this.icon_size / height * scale;
+          fitHeight = _this.icon_size * scale;
           fitPosTop = 0;
-          fitPosLeft = _this.ICON_SIZE / 2 - fitWidth / 2 + adjust;
-          space = (_this.ICON_SIZE - fitWidth) / 2;
+          fitPosLeft = _this.icon_size / 2 - fitWidth / 2 + adjust;
+          space = (_this.icon_size - fitWidth) / 2;
           return pos = space + fitWidth;
         } else {
-          fitWidth = _this.ICON_SIZE * scale;
-          fitHeight = height * _this.ICON_SIZE / width * scale;
-          fitPosTop = _this.ICON_SIZE / 2 - fitHeight / 2;
+          fitWidth = _this.icon_size * scale;
+          fitHeight = height * _this.icon_size / width * scale;
+          fitPosTop = _this.icon_size / 2 - fitHeight / 2;
           fitPosLeft = adjust;
-          space = (_this.ICON_SIZE - fitHeight) / 2;
+          space = (_this.icon_size - fitHeight) / 2;
           return pos = space + fitHeight;
         }
       };
@@ -555,11 +576,11 @@
         ctx.drawImage(icon, fitPosLeft, fitPosTop, fitWidth, fitHeight);
         ctx.fillStyle = '#ffffff';
         if (base) {
-          ctx.fillRect(0, 0, space, this.ICON_SIZE);
-          ctx.fillRect(pos, 0, space, this.ICON_SIZE);
+          ctx.fillRect(0, 0, space, this.icon_size);
+          ctx.fillRect(pos, 0, space, this.icon_size);
         } else {
-          ctx.fillRect(0, 0, this.ICON_SIZE, space);
-          ctx.fillRect(0, pos, this.ICON_SIZE, space);
+          ctx.fillRect(0, 0, this.icon_size, space);
+          ctx.fillRect(0, pos, this.icon_size, space);
         }
       } else {
         getFitProp();
@@ -571,11 +592,11 @@
       }
       if (adjust !== 0) {
         ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, (canvas_size - this.ICON_SIZE) / 2, this.ICON_SIZE);
-        ctx.fillRect(canvas_size - (canvas_size - this.ICON_SIZE) / 2, 0, (canvas_size - this.ICON_SIZE) / 2, this.ICON_SIZE);
-        ctx.fillRect(0, this.ICON_SIZE, canvas_size, canvas_size - this.ICON_SIZE);
+        ctx.fillRect(0, 0, (canvas_size - this.icon_size) / 2, this.icon_size);
+        ctx.fillRect(canvas_size - (canvas_size - this.icon_size) / 2, 0, (canvas_size - this.icon_size) / 2, this.icon_size);
+        ctx.fillRect(0, this.icon_size, canvas_size, canvas_size - this.icon_size);
       }
-      ctx.drawImage(frame, adjust, 0, this.ICON_SIZE, this.ICON_SIZE);
+      ctx.drawImage(frame, adjust, 0, this.icon_size, this.icon_size);
       this._onRenderText();
       return this._createFile();
     };
@@ -623,19 +644,22 @@
     };
 
     Preview.prototype._onRenderText = function() {
-      var canvas_size, ctx, frontFillStyle, mode, value;
+      var canvas_size, ctx, fontSize, frontFillStyle, mode, value;
       mode = this.model.get('mode');
       value = this.model.get("value");
-      canvas_size = this.CANVAS_HAS_TEXT_SIZE;
+      canvas_size = this.icon_size + this._getCanvasAdjust();
+      fontSize = this.icon_size === 98 ? 22 : 40;
       ctx = this.ctx;
-      ctx.font = "22px kurokane";
+      ctx.font = "" + fontSize + "px kurokane";
       ctx.textAlign = 'center';
       frontFillStyle = '#f0ff00';
       ctx.shadowColor = '#000000';
       ctx.shadowBlur = 0;
       if (!mode) {
+        this.canvas.setAttribute('class', 'default');
         return;
       }
+      this.canvas.setAttribute('class', 'large');
       if (mode === 'lv') {
         if (value === 99) {
           value = '最大';
