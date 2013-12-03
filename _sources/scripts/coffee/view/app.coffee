@@ -78,6 +78,8 @@ class PIG.View.App extends Backbone.View
     $file = $(ev.target).closest('input')
     file = $file.get(0).files[0]
 
+    console.log(file)
+
     # EXIFから正しいOrientationを取得しておく
     EXIF.getData(file, =>
       @model.set('orientation', EXIF.getTag(file, 'Orientation'))

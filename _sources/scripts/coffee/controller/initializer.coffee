@@ -1,4 +1,4 @@
-class PIG.Controller.App extends PIG.Controller.Base
+class PIG.Controller.Initializer extends PIG.Controller.Base
 
   initialize: ->
 

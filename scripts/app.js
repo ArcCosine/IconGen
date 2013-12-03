@@ -1,4 +1,4 @@
-/*! IconGen for Puzzle & Dragons - v2.1.3 - 2013-10-20 17:49:14
+/*! IconGen for Puzzle & Dragons - v2.1.4 - 2013-12-03 20:10:26
 http://5509.github.io/IconGen * Copyright (c) 2013 Kazunori Tokuda;
 Licensed under the MIT http://5509.mit-license.org */
 (function() {
@@ -52,15 +52,15 @@ Licensed under the MIT http://5509.mit-license.org */
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  PIG.Controller.App = (function(_super) {
-    __extends(App, _super);
+  PIG.Controller.Initializer = (function(_super) {
+    __extends(Initializer, _super);
 
-    function App() {
-      _ref = App.__super__.constructor.apply(this, arguments);
+    function Initializer() {
+      _ref = Initializer.__super__.constructor.apply(this, arguments);
       return _ref;
     }
 
-    App.prototype.initialize = function() {
+    Initializer.prototype.initialize = function() {
       var webfontText,
         _this = this;
       if (typeof window.FileReader === 'undefined') {
@@ -82,9 +82,9 @@ Licensed under the MIT http://5509.mit-license.org */
       });
     };
 
-    App.prototype.notSupported = '<div class="not-supported">\n  <p>パズドラ風アイコンジェネレーターは<br>\n  お使いの端末には対応していません。<br>\n  対応端末は以下の通りです。</p>\n  <h3>PC/Mac</h3>\n  <ul>\n    <li>Google Chromeの最新版</li>\n    <li>Safariの最新版</li>\n    <li>Firefoxの最新版</li>\n  </ul>\n  <h3>モバイル端末</h3>\n  <ul>\n    <li>iOS6以上のSafari</li>\n    <li>Android4.x以上の標準ブラウザ</li>\n  </ul>\n  <p>お手数ですが、対応端末でご利用ください。</p>\n</div>';
+    Initializer.prototype.notSupported = '<div class="not-supported">\n  <p>パズドラ風アイコンジェネレーターは<br>\n  お使いの端末には対応していません。<br>\n  対応端末は以下の通りです。</p>\n  <h3>PC/Mac</h3>\n  <ul>\n    <li>Google Chromeの最新版</li>\n    <li>Safariの最新版</li>\n    <li>Firefoxの最新版</li>\n  </ul>\n  <h3>モバイル端末</h3>\n  <ul>\n    <li>iOS6以上のSafari</li>\n    <li>Android4.x以上の標準ブラウザ</li>\n  </ul>\n  <p>お手数ですが、対応端末でご利用ください。</p>\n</div>';
 
-    return App;
+    return Initializer;
 
   })(PIG.Controller.Base);
 
@@ -273,6 +273,7 @@ Licensed under the MIT http://5509.mit-license.org */
         _this = this;
       $file = $(ev.target).closest('input');
       file = $file.get(0).files[0];
+      console.log(file);
       EXIF.getData(file, function() {
         return _this.model.set('orientation', EXIF.getTag(file, 'Orientation'));
       });

@@ -28,7 +28,7 @@ module.exports = (grunt) ->
       src: [
         'scripts/tmp/app/*.js'
         'scripts/tmp/controller/base.js'
-        'scripts/tmp/controller/app.js'
+        'scripts/tmp/controller/initializer.js'
         'scripts/tmp/model/*.js'
         'scripts/tmp/collection/*.js'
         'scripts/tmp/view/app.js'

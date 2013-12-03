@@ -9,7 +9,7 @@ module.exports = (grunt) ->
       src: [
         'app/*.coffee'
         'controller/base.coffee'
-        'controller/app.coffee'
+        'controller/initializer.coffee'
         'model/app.coffee'
         'view/app.coffee'
         'view/preview.coffee'
