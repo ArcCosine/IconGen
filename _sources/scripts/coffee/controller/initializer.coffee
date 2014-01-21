@@ -8,7 +8,6 @@ class PIG.Controller.Initializer extends PIG.Controller.Base
     if ( PIG.isMobile() )
       $('html').addClass('sp')
 
-    # 利用するテキスト
     webfontText = 'Lv.0123456789最大+と覚醒交互に（Tt設定不可★ダウンロードお@shimaelrw写真をえらぶ拡待ちくださいアイコンの大きフレーム外す注意）両方部分が切り替わるなま、はでせん。チェック状態位置調整た端末よてオ著し動作遅ったしこも'
 
     # KurokaneStd-EBサブセットの読み込み
