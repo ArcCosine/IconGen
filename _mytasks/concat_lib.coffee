@@ -19,6 +19,10 @@ module.exports = (grunt) ->
         '<%= dirs.libSrc %>binaryajax.js'
         '<%= dirs.libSrc %>exif.js'
         '<%= dirs.libSrc %>megapix-image.js'
+        '<%= dirs.libSrc %>b64.js'
+        '<%= dirs.libSrc %>LZWEncoder.js'
+        '<%= dirs.libSrc %>NeuQuant.js'
+        '<%= dirs.libSrc %>GIFEncoder.js'
       ]
       dest: 'scripts/lib.js'
     }

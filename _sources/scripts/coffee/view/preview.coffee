@@ -14,11 +14,16 @@ class PIG.View.Preview extends Backbone.View
     @$el = $('.frame_area')
     @el = @$el.get(0)
 
+    @encoder = new GIFEncoder()
+    @encoder.setRepeat(0)
+    @encoder.setDelay(2000)
+
     @_initCanvas()
     @_eventify()
 
     @_loadImage(@model.get('iconSrc'), 'icon')
     @_loadImage(@model.get('path'), 'frame')
+    @_loadImage(@model.get('arousalSrc'), 'arousal')
 
   _eventify: ->
 
@@ -78,7 +83,15 @@ class PIG.View.Preview extends Backbone.View
       @_drawIcon()
     )
 
-    @listenTo(@model, 'change:value', =>
+    @listenTo(@model, 'change:lv', =>
+      @_drawIcon()
+    )
+
+    @listenTo(@model, 'change:plus', =>
+      @_drawIcon()
+    )
+
+    @listenTo(@model, 'change:arousal', =>
       @_drawIcon()
     )
 
@@ -98,6 +111,10 @@ class PIG.View.Preview extends Backbone.View
     )
 
     @listenTo(@model, 'change:noFrame', =>
+      @_drawIcon()
+    )
+
+    @listenTo(@model, 'change:animation', =>
       @_drawIcon()
     )
 
@@ -190,7 +207,7 @@ class PIG.View.Preview extends Backbone.View
     else
       @_loadImage(@model.get('iconSrc'), 'icon')
 
-  _drawIcon: ->
+  _drawIcon: (skipRenderPlus) ->
     ctx = @ctx
     canvas = @canvas
     iconPos = @model.get('iconPos')
@@ -209,7 +226,7 @@ class PIG.View.Preview extends Backbone.View
     pos = undefined
     base = undefined
     getFitProp = =>
-      if ( @model.get('mode') )
+      if ( @model.get('lv') or @model.get('plus') or @model.get('arousal') )
         canvas_size = @icon_size + @_getCanvasAdjust()
       else
         canvas_size = @icon_size
@@ -276,8 +293,48 @@ class PIG.View.Preview extends Backbone.View
     # フレームのレンダリング
     ctx.drawImage(frame, adjust, 0, @icon_size, @icon_size)
 
-    @_onRenderText()
-    @_createFile()
+    if ( not @_renderOption(skipRenderPlus) )
+      return
+
+    if ( not @_hasTarget() )
+      @canvas.setAttribute('class', 'default')
+
+    @_createFile(skipRenderPlus)
+
+  _renderOption: (skipRenderPlus) ->
+    @_onRenderLv()
+
+    if ( @model.get('animation') and @_plusAndArousalState() is 'both' )
+      # 2フレーム目のレンダリングしなおし
+      if ( not skipRenderPlus )
+        @encoder.setSize(191, 191)
+        @encoder.start()
+        @_onRenderPlus()
+        @encoder.addFrame(@ctx)
+
+        @_drawIcon(true)
+        return false
+      else
+        @_onRenderArousal()
+        @encoder.addFrame(@ctx)
+        @encoder.finish()
+    else if ( @_plusAndArousalState() is 'plus' )
+      @_onRenderPlus()
+    else
+      @_onRenderArousal()
+
+    return true
+
+  _plusAndArousalState: ->
+    if ( @model.get('plus') and @model.get('arousal') )
+      return 'both'
+    else if ( @model.get('plus') and not @model.get('arousal') )
+      return 'plus'
+    else
+      return 'arousal'
+
+  _hasTarget: ->
+    return @model.get('lv') or @model.get('plus') or @model.get('arousal')
 
   _loadImage: (src, target) -> # target: icon or frame
     img = new Image()
@@ -293,9 +350,15 @@ class PIG.View.Preview extends Backbone.View
           iconBaseImage  : img
         })
       # フレームの場合
-      else
+      else if ( target is 'frame' )
         @model.set({
           iconFrameImage: img
+        })
+      else
+        @model.set({
+          iconArousalImage: img
+          iconArousalImageWidth: img.width
+          iconArousalImageHeight: img.height
         })
 
       @model.trigger('set:image')
@@ -306,21 +369,36 @@ class PIG.View.Preview extends Backbone.View
     img.addEventListener('load', _onImgLoad, false)
 
   _initCanvas: ->
-    @canvas = $('canvas').get(0)
+    @$canvas = $('canvas')
+    @canvas = @$canvas.get(0)
     @ctx = @canvas.getContext('2d')
 
-  _createFile: ->
-    dataURL = @canvas.toDataURL(@model.get('type'))
-    fileType= @model.get('type').replace('image/', '') or 'png'
+    @aniGifPreview = $('.ani_gif_preview')
+
+  _createFile: (aniGif) ->
+    if ( not aniGif )
+      @$canvas.show()
+      @aniGifPreview.hide()
+      dataURL = @canvas.toDataURL(@model.get('type'))
+      fileType = @model.get('type').replace('image/', '') or 'png'
+    else
+      @$canvas.hide()
+      binary_gif = @encoder.stream().getData()
+      dataURL = "data:image/gif;base64, #{encode64(binary_gif)}"
+      @aniGifPreview.show().attr({
+        width: 104
+        height: 104
+        src: dataURL
+      })
+      fileType = 'gif'
 
     @trigger('create:file', {
       href: dataURL
       fileName: "puzzIconGen_#{+(new Date)}_.#{fileType}"
     })
 
-  _onRenderText: ->
-    mode = @model.get('mode')
-    value = @model.get("value")
+  _onRenderLv: ->
+    value = @model.get('lv')
     canvas_size = @icon_size + @_getCanvasAdjust()
     fontSize = if @icon_size is 98 then 22 else 40
     ctx = @ctx
@@ -330,19 +408,19 @@ class PIG.View.Preview extends Backbone.View
     ctx.shadowColor = '#000000'
     ctx.shadowBlur = 0
 
-    if ( not mode )
-      @canvas.setAttribute('class', 'default')
+    #if ( not mode )
+    #  @canvas.setAttribute('class', 'default')
+    #  return
+    if ( not value )
+      #@canvas.setAttribute('class', 'default')
       return
     @canvas.setAttribute('class', 'large')
 
-    if ( mode is 'lv' )
-      if ( value is 99 )
-        value = '最大'
-      else
-        frontFillStyle = '#ffffff'
-      value = 'Lv.' + value
+    if ( value is 99 )
+      value = '最大'
     else
-      value = '+' + value
+      frontFillStyle = '#ffffff'
+    value = 'Lv.' + value
 
     ctx.fillStyle = '#000000'
     # 文字外枠
@@ -354,3 +432,87 @@ class PIG.View.Preview extends Backbone.View
     ctx.fillStyle = frontFillStyle
     ctx.shadowBlur = 0
     ctx.fillText(value, canvas_size/2, canvas_size - 4)
+
+  _onRenderPlus: ->
+    value = @model.get('plus')
+    canvas_size = @icon_size + @_getCanvasAdjust()
+    fontSize = if @icon_size is 98 then 22 else 44
+    ctx = @ctx
+    ctx.font = "#{fontSize}px kurokane"
+    ctx.textAlign = 'right'
+    ctx.verticalAlign = 'top'
+    frontFillStyle = '#f0ff00'
+    ctx.shadowColor = '#000000'
+    ctx.shadowBlur = 0
+
+    #if ( not mode )
+    #  @canvas.setAttribute('class', 'default')
+    #  return
+    if ( not value )
+      #@canvas.setAttribute('class', 'default')
+      return
+    @canvas.setAttribute('class', 'large')
+
+    value = '+' + value
+
+    ctx.fillStyle = '#000000'
+    # 文字外枠
+    ctx.fillText(value, canvas_size - 12 - 2, 52 + 2 - 4)
+    ctx.fillText(value, canvas_size - 12 - 2, 52 - 2 - 4)
+    ctx.fillText(value, canvas_size - 12 + 2, 52 + 2 - 4)
+    ctx.fillText(value, canvas_size - 12 + 2, 52 - 2 - 4)
+
+    ctx.fillStyle = frontFillStyle
+    ctx.shadowBlur = 0
+    ctx.fillText(value, canvas_size - 12, 52 - 4)
+
+  _onRenderArousal: ->
+    value = @model.get('arousal')
+    canvas_size = @icon_size + @_getCanvasAdjust()
+    fontSize = if @icon_size is 98 then 22 else 38
+    ctx = @ctx
+    ctx.textAlign = 'right'
+    ctx.verticalAlign = 'top'
+    frontFillStyle = '#f0ff00'
+    ctx.shadowColor = '#000000'
+    ctx.shadowBlur = 0
+
+    #if ( not mode )
+    #  @canvas.setAttribute('class', 'default')
+    #  return
+    if ( not value )
+      #@canvas.setAttribute('class', 'default')
+      return
+    @canvas.setAttribute('class', 'large')
+
+    adjustLeft = -22
+    adjustTop = 42
+
+    if ( value is 10 )
+      adjustLeft = -16
+      adjustTop = 40
+      fontSize = fontSize - 2
+      value = '★'
+
+    ctx.drawImage(
+      @model.get('iconArousalImage'),
+      canvas_size - @model.get('iconArousalImageWidth') + 5,
+      0,
+      @model.get('iconArousalImageWidth') - 10,
+      @model.get('iconArousalImageHeight') - 10
+    )
+
+    ctx.font = "#{fontSize+4}px kurokane"
+    ctx.fillStyle = '#000000'
+    # 文字外枠
+    ctx.fillText(value, canvas_size + adjustLeft - 2, adjustTop + 3)
+    ctx.fillText(value, canvas_size + adjustLeft - 2, adjustTop - 0)
+    ctx.fillText(value, canvas_size + adjustLeft - 0, adjustTop - 0)
+    ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop + 3)
+    ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop + 2)
+    ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop - 0)
+
+    ctx.font = "#{fontSize}px kurokane"
+    ctx.fillStyle = frontFillStyle
+    ctx.shadowBlur = 0
+    ctx.fillText(value, canvas_size + adjustLeft - 1, adjustTop)

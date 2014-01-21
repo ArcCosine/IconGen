@@ -62,7 +62,8 @@
   </div>
   <div class="frame_area flame">
     <div class="frame_main_area">
-      <canvas width="108"></canvas>
+      <canvas width="108" class="default"></canvas>
+      <img class="ani_gif_preview">
     </div>
     <div class="left">
       <a class="frame_double active" href="#" data-pig-sub-frame="double">サブ属性・ダブル</a>
@@ -80,22 +81,26 @@
   <div class="select_photo"><input type="file"></div>
   <div class="scale_photo"><span>拡大</span><input type="range" min="1" max="10" step="0.1" value="1"></div>
   <div class="input_group">
-    <div class="input_plus"><span>+</span><input type="number" min="1" max="297" data-pig-mode="plus"></div>
-    <div class="input_level"><span>Lv</span><input type="number" min="1" max="99" data-pig-mode="lv"></div>
-  </div>
-  <div class="select_size">
-    <span>アイコンの大きさ</span> <select name="size">
-    <option value="180" selected>180x180</option>
-    <option value="98">98x98</option>
-    </select>
+    <div class="input_level"><span>Lv</span><input type="number" min="1" max="99" data-pig-target="lv"></div>
+    <div class="input_plus"><span>+</span><input type="number" min="1" max="297" data-pig-target="plus"></div>
+    <div class="input_arousal"><span>覚醒</span><input type="number" min="1" max="10" data-pig-target="arousal"></div>
   </div>
   <div class="no_frame">
     <label><span>フレームを外す</span>
       <div class="checkbox">
-        <input type="checkbox">
+        <input type="checkbox" class="no_frame">
         <span></span>
       </div>
     </label>
+  </div>
+  <div class="animation">
+    <label><span>+と覚醒を交互に（Twitterに設定不可</span>
+      <div class="checkbox">
+        <input type="checkbox" class="animation">
+        <span></span>
+      </div>
+    </label>
+    <span class="note">注意）+と覚醒を両方設定でき、交互に切り替わるアイコンになりますが、Twitterには設定できません。チェック状態ではアイコンの位置調整もできません。<strong>また端末によってはオンにすると著しく動作が遅くなったり、動作しなくなることもあります。</strong></span>
   </div>
   <div class="btn_download disabled"><a href="javascript:void(0)" class="download">ダウンロード</a></div>
 </div><!-- // App -->
@@ -122,6 +127,9 @@
   <div class="inner">
     <p>パズル＆ドラゴンズのモンスターアイコンみたいなアイコンジェネレータです。Twitterのアイコン等に使ってね。</p>
     <dl class="news">
+      <dt>2014-01-21</dt>
+      <dd>ステータス表記を現バージョンのレイアウトにあわせました。<br>
+      +と覚醒を選べるようになりました。</dd>
       <dt>2013-10-20</dt>
       <dd>フレームなしが選べるようになりました。</dd>
       <dt>2013-10-20</dt>

@@ -8,7 +8,8 @@ class PIG.View.App extends Backbone.View
     'keyup input[type="number"]'    : '_onChangeText'
     'change input[type="number"]'   : '_onChangeText'
     'change select[name="size"]'    : '_onChangeSize'
-    'change input[type="checkbox"]' : '_onClickNoFrame'
+    'change input.no_frame'         : '_onClickNoFrame'
+    'change input.animation'        : '_onClickAnimation'
   }
 
   initialize: ->
@@ -21,8 +22,9 @@ class PIG.View.App extends Backbone.View
     })
 
     @$frameArea = @$el.find('.frame_area')
-    @$textLv = @$el.find('[data-pig-mode="lv"]')
-    @$textPlus = @$el.find('[data-pig-mode="plus"]')
+    @$textLv = @$el.find('[data-pig-target="lv"]')
+    @$textPlus = @$el.find('[data-pig-target="plus"]')
+    @$textArousal = @$el.find('[data-pig-target="arousal"]')
 
     @_initReader()
     @_eventify()
@@ -78,8 +80,6 @@ class PIG.View.App extends Backbone.View
     $file = $(ev.target).closest('input')
     file = $file.get(0).files[0]
 
-    console.log(file)
-
     # EXIFから正しいOrientationを取得しておく
     EXIF.getData(file, =>
       @model.set('orientation', EXIF.getTag(file, 'Orientation'))
@@ -103,35 +103,52 @@ class PIG.View.App extends Backbone.View
 
   _onChangeText: (ev) ->
     $input = $(ev.target).closest('input')
-    mode = $input.data('pig-mode')
+    target = $input.data('pig-target')
     value = parseInt($input.val())
     value = if _.isNumber(value) then value else 1
 
-    if ( mode is 'lv' )
-      if ( value )
-        @$textPlus.val('')
+    if ( target is 'lv' )
       if ( value < 1 )
         value = 1
       else if ( 99 < value )
         value = 99
         $input.val(value)
-    else
-      if ( value )
-        @$textLv.val('')
+    else if ( target is 'plus' )
+      if ( not @model.get('animation') )
+        # plusが設定された場合は覚醒を削除
+        @$textArousal.val('')
+        @model.set('arousal', null)
       if ( value < 1 )
         value = 1
       else if ( 297 < value )
         value = 297
         $input.val(value)
+    else
+      if ( not @model.get('animation') )
+        # 覚醒が設定された場合はplusを削除
+        @$textPlus.val('')
+        @model.set('plus', null)
+      if ( value < 1 )
+        value = 1
+      else if ( 9 < value )
+        value = 10
+        $input.val(value)
 
-    if ( not @$textPlus.val() and not @$textLv.val() )
-      @model.set('mode', null)
-    else if ( value )
-      @model.set('mode', mode)
-      @model.set('value', value)
+    if ( value )
+      #@model.set('mode', mode)
+      # target: plus, lv, arousal
+      @model.set(target, value)
+    else
+      @model.set(target, null)
 
   _onClickNoFrame: (ev) ->
     $input = $(ev.target).closest('input')
     checked = $input.prop('checked')
 
     @model.set('noFrame', checked)
+
+  _onClickAnimation: (ev) ->
+    $input = $(ev.target).closest('input')
+    checked = $input.prop('checked')
+
+    @model.set('animation', checked)

@@ -1,5 +1,5 @@
-/*! IconGen for Puzzle & Dragons - v2.1.4 - 2013-12-03 20:10:26
-http://5509.github.io/IconGen * Copyright (c) 2013 Kazunori Tokuda;
+/*! IconGen for Puzzle & Dragons - v2.2.0 - 2014-01-22 3:11:06
+http://5509.github.io/IconGen * Copyright (c) 2014 Kazunori Tokuda;
 Licensed under the MIT http://5509.mit-license.org */
 (function() {
   window.PIG = {};
@@ -69,7 +69,7 @@ Licensed under the MIT http://5509.mit-license.org */
       if (PIG.isMobile()) {
         $('html').addClass('sp');
       }
-      webfontText = 'Lv.0123456789最大+ダウンロードお@shimaelrw写真をえらぶ拡待ちくださいアイコンの大きフレーム外す';
+      webfontText = 'Lv.0123456789最大+と覚醒交互に（Tt設定不可★ダウンロードお@shimaelrw写真をえらぶ拡待ちくださいアイコンの大きフレーム外す注意）両方部分が切り替わるなま、はでせん。チェック状態位置調整た端末よてオ著し動作遅ったしこも';
       return FONTPLUS.load([
         {
           fontname: 'KurokaneStd-EB',
@@ -111,6 +111,7 @@ Licensed under the MIT http://5509.mit-license.org */
       scale: 1,
       selected: false,
       iconSrc: 'images/tirol.jpg',
+      arousalSrc: 'images/arousal.png',
       iconBaseWidth: null,
       iconBaseHeight: null,
       iconBaseImage: null,
@@ -120,7 +121,8 @@ Licensed under the MIT http://5509.mit-license.org */
       },
       frameSrc: null,
       iconFrameImage: null,
-      noFrame: false
+      noFrame: false,
+      animation: false
     };
 
     App.prototype.initialize = function() {
@@ -131,23 +133,38 @@ Licensed under the MIT http://5509.mit-license.org */
     };
 
     App.prototype.eventify = function() {
+      var _this = this;
       this.on('change:main', function() {
-        return this._setFramePath();
+        return _this._setFramePath();
       });
       this.on('change:sub', function() {
-        return this._setFramePath();
+        return _this._setFramePath();
       });
       this.on('change:noFrame', function() {
-        return this._setFramePath();
+        return _this._setFramePath();
       });
       this.on('change:file', function() {
-        return this.set('type', this.get('file').type);
+        return _this.set('type', _this.get('file').type);
       });
-      return this.on('change:value', function() {
+      this.on('change:lv', function() {
         var value;
-        value = this.get('value');
+        value = _this.get('lv');
         if (!value) {
-          return this.set('mode', null);
+          return _this.set('lv', null);
+        }
+      });
+      this.on('change:plus', function() {
+        var value;
+        value = _this.get('plus');
+        if (!value) {
+          return _this.set('plus', null);
+        }
+      });
+      return this.on('change:arousal', function() {
+        var value;
+        value = _this.get('arousal');
+        if (!value) {
+          return _this.set('arousal', null);
         }
       });
     };
@@ -199,7 +216,8 @@ Licensed under the MIT http://5509.mit-license.org */
       'keyup input[type="number"]': '_onChangeText',
       'change input[type="number"]': '_onChangeText',
       'change select[name="size"]': '_onChangeSize',
-      'change input[type="checkbox"]': '_onClickNoFrame'
+      'change input.no_frame': '_onClickNoFrame',
+      'change input.animation': '_onClickAnimation'
     };
 
     App.prototype.initialize = function() {
@@ -210,8 +228,9 @@ Licensed under the MIT http://5509.mit-license.org */
         model: this.model
       });
       this.$frameArea = this.$el.find('.frame_area');
-      this.$textLv = this.$el.find('[data-pig-mode="lv"]');
-      this.$textPlus = this.$el.find('[data-pig-mode="plus"]');
+      this.$textLv = this.$el.find('[data-pig-target="lv"]');
+      this.$textPlus = this.$el.find('[data-pig-target="plus"]');
+      this.$textArousal = this.$el.find('[data-pig-target="arousal"]');
       this._initReader();
       return this._eventify();
     };
@@ -273,7 +292,6 @@ Licensed under the MIT http://5509.mit-license.org */
         _this = this;
       $file = $(ev.target).closest('input');
       file = $file.get(0).files[0];
-      console.log(file);
       EXIF.getData(file, function() {
         return _this.model.set('orientation', EXIF.getTag(file, 'Orientation'));
       });
@@ -297,24 +315,22 @@ Licensed under the MIT http://5509.mit-license.org */
     };
 
     App.prototype._onChangeText = function(ev) {
-      var $input, mode, value;
+      var $input, target, value;
       $input = $(ev.target).closest('input');
-      mode = $input.data('pig-mode');
+      target = $input.data('pig-target');
       value = parseInt($input.val());
       value = _.isNumber(value) ? value : 1;
-      if (mode === 'lv') {
-        if (value) {
-          this.$textPlus.val('');
-        }
+      if (target === 'lv') {
         if (value < 1) {
           value = 1;
         } else if (99 < value) {
           value = 99;
           $input.val(value);
         }
-      } else {
-        if (value) {
-          this.$textLv.val('');
+      } else if (target === 'plus') {
+        if (!this.model.get('animation')) {
+          this.$textArousal.val('');
+          this.model.set('arousal', null);
         }
         if (value < 1) {
           value = 1;
@@ -322,12 +338,22 @@ Licensed under the MIT http://5509.mit-license.org */
           value = 297;
           $input.val(value);
         }
+      } else {
+        if (!this.model.get('animation')) {
+          this.$textPlus.val('');
+          this.model.set('plus', null);
+        }
+        if (value < 1) {
+          value = 1;
+        } else if (9 < value) {
+          value = 10;
+          $input.val(value);
+        }
       }
-      if (!this.$textPlus.val() && !this.$textLv.val()) {
-        return this.model.set('mode', null);
-      } else if (value) {
-        this.model.set('mode', mode);
-        return this.model.set('value', value);
+      if (value) {
+        return this.model.set(target, value);
+      } else {
+        return this.model.set(target, null);
       }
     };
 
@@ -336,6 +362,13 @@ Licensed under the MIT http://5509.mit-license.org */
       $input = $(ev.target).closest('input');
       checked = $input.prop('checked');
       return this.model.set('noFrame', checked);
+    };
+
+    App.prototype._onClickAnimation = function(ev) {
+      var $input, checked;
+      $input = $(ev.target).closest('input');
+      checked = $input.prop('checked');
+      return this.model.set('animation', checked);
     };
 
     return App;
@@ -370,10 +403,14 @@ Licensed under the MIT http://5509.mit-license.org */
       this.model = attr.model;
       this.$el = $('.frame_area');
       this.el = this.$el.get(0);
+      this.encoder = new GIFEncoder();
+      this.encoder.setRepeat(0);
+      this.encoder.setDelay(2000);
       this._initCanvas();
       this._eventify();
       this._loadImage(this.model.get('iconSrc'), 'icon');
-      return this._loadImage(this.model.get('path'), 'frame');
+      this._loadImage(this.model.get('path'), 'frame');
+      return this._loadImage(this.model.get('arousalSrc'), 'arousal');
     };
 
     Preview.prototype._eventify = function() {
@@ -419,7 +456,13 @@ Licensed under the MIT http://5509.mit-license.org */
       this.listenTo(this.model, 'change:scale', function() {
         return _this._drawIcon();
       });
-      this.listenTo(this.model, 'change:value', function() {
+      this.listenTo(this.model, 'change:lv', function() {
+        return _this._drawIcon();
+      });
+      this.listenTo(this.model, 'change:plus', function() {
+        return _this._drawIcon();
+      });
+      this.listenTo(this.model, 'change:arousal', function() {
         return _this._drawIcon();
       });
       this.listenTo(this.model, 'change:mode', function() {
@@ -435,7 +478,10 @@ Licensed under the MIT http://5509.mit-license.org */
         _this.icon_size = _this.model.get('size');
         return _this._drawIcon();
       });
-      return this.listenTo(this.model, 'change:noFrame', function() {
+      this.listenTo(this.model, 'change:noFrame', function() {
+        return _this._drawIcon();
+      });
+      return this.listenTo(this.model, 'change:animation', function() {
         return _this._drawIcon();
       });
     };
@@ -538,7 +584,7 @@ Licensed under the MIT http://5509.mit-license.org */
       }
     };
 
-    Preview.prototype._drawIcon = function() {
+    Preview.prototype._drawIcon = function(skipRenderPlus) {
       var adjust, base, canvas, canvas_size, ctx, fitHeight, fitPosLeft, fitPosTop, fitWidth, frame, getFitProp, height, icon, iconPos, movedX, movedY, pos, scale, space, width,
         _this = this;
       ctx = this.ctx;
@@ -559,7 +605,7 @@ Licensed under the MIT http://5509.mit-license.org */
       pos = void 0;
       base = void 0;
       getFitProp = function() {
-        if (_this.model.get('mode')) {
+        if (_this.model.get('lv') || _this.model.get('plus') || _this.model.get('arousal')) {
           canvas_size = _this.icon_size + _this._getCanvasAdjust();
         } else {
           canvas_size = _this.icon_size;
@@ -621,8 +667,50 @@ Licensed under the MIT http://5509.mit-license.org */
         ctx.fillRect(0, this.icon_size, canvas_size, canvas_size - this.icon_size);
       }
       ctx.drawImage(frame, adjust, 0, this.icon_size, this.icon_size);
-      this._onRenderText();
-      return this._createFile();
+      if (!this._renderOption(skipRenderPlus)) {
+        return;
+      }
+      if (!this._hasTarget()) {
+        this.canvas.setAttribute('class', 'default');
+      }
+      return this._createFile(skipRenderPlus);
+    };
+
+    Preview.prototype._renderOption = function(skipRenderPlus) {
+      this._onRenderLv();
+      if (this.model.get('animation') && this._plusAndArousalState() === 'both') {
+        if (!skipRenderPlus) {
+          this.encoder.setSize(191, 191);
+          this.encoder.start();
+          this._onRenderPlus();
+          this.encoder.addFrame(this.ctx);
+          this._drawIcon(true);
+          return false;
+        } else {
+          this._onRenderArousal();
+          this.encoder.addFrame(this.ctx);
+          this.encoder.finish();
+        }
+      } else if (this._plusAndArousalState() === 'plus') {
+        this._onRenderPlus();
+      } else {
+        this._onRenderArousal();
+      }
+      return true;
+    };
+
+    Preview.prototype._plusAndArousalState = function() {
+      if (this.model.get('plus') && this.model.get('arousal')) {
+        return 'both';
+      } else if (this.model.get('plus') && !this.model.get('arousal')) {
+        return 'plus';
+      } else {
+        return 'arousal';
+      }
+    };
+
+    Preview.prototype._hasTarget = function() {
+      return this.model.get('lv') || this.model.get('plus') || this.model.get('arousal');
     };
 
     Preview.prototype._loadImage = function(src, target) {
@@ -639,9 +727,15 @@ Licensed under the MIT http://5509.mit-license.org */
             iconBaseHeight: img.height,
             iconBaseImage: img
           });
-        } else {
+        } else if (target === 'frame') {
           _this.model.set({
             iconFrameImage: img
+          });
+        } else {
+          _this.model.set({
+            iconArousalImage: img,
+            iconArousalImageWidth: img.width,
+            iconArousalImageHeight: img.height
           });
         }
         _this.model.trigger('set:image');
@@ -653,24 +747,39 @@ Licensed under the MIT http://5509.mit-license.org */
     };
 
     Preview.prototype._initCanvas = function() {
-      this.canvas = $('canvas').get(0);
-      return this.ctx = this.canvas.getContext('2d');
+      this.$canvas = $('canvas');
+      this.canvas = this.$canvas.get(0);
+      this.ctx = this.canvas.getContext('2d');
+      return this.aniGifPreview = $('.ani_gif_preview');
     };
 
-    Preview.prototype._createFile = function() {
-      var dataURL, fileType;
-      dataURL = this.canvas.toDataURL(this.model.get('type'));
-      fileType = this.model.get('type').replace('image/', '') || 'png';
+    Preview.prototype._createFile = function(aniGif) {
+      var binary_gif, dataURL, fileType;
+      if (!aniGif) {
+        this.$canvas.show();
+        this.aniGifPreview.hide();
+        dataURL = this.canvas.toDataURL(this.model.get('type'));
+        fileType = this.model.get('type').replace('image/', '') || 'png';
+      } else {
+        this.$canvas.hide();
+        binary_gif = this.encoder.stream().getData();
+        dataURL = "data:image/gif;base64, " + (encode64(binary_gif));
+        this.aniGifPreview.show().attr({
+          width: 104,
+          height: 104,
+          src: dataURL
+        });
+        fileType = 'gif';
+      }
       return this.trigger('create:file', {
         href: dataURL,
         fileName: "puzzIconGen_" + (+(new Date)) + "_." + fileType
       });
     };
 
-    Preview.prototype._onRenderText = function() {
-      var canvas_size, ctx, fontSize, frontFillStyle, mode, value;
-      mode = this.model.get('mode');
-      value = this.model.get("value");
+    Preview.prototype._onRenderLv = function() {
+      var canvas_size, ctx, fontSize, frontFillStyle, value;
+      value = this.model.get('lv');
       canvas_size = this.icon_size + this._getCanvasAdjust();
       fontSize = this.icon_size === 98 ? 22 : 40;
       ctx = this.ctx;
@@ -679,21 +788,16 @@ Licensed under the MIT http://5509.mit-license.org */
       frontFillStyle = '#f0ff00';
       ctx.shadowColor = '#000000';
       ctx.shadowBlur = 0;
-      if (!mode) {
-        this.canvas.setAttribute('class', 'default');
+      if (!value) {
         return;
       }
       this.canvas.setAttribute('class', 'large');
-      if (mode === 'lv') {
-        if (value === 99) {
-          value = '最大';
-        } else {
-          frontFillStyle = '#ffffff';
-        }
-        value = 'Lv.' + value;
+      if (value === 99) {
+        value = '最大';
       } else {
-        value = '+' + value;
+        frontFillStyle = '#ffffff';
       }
+      value = 'Lv.' + value;
       ctx.fillStyle = '#000000';
       ctx.fillText(value, canvas_size / 2 - 2, canvas_size + 2 - 4);
       ctx.fillText(value, canvas_size / 2 - 2, canvas_size - 2 - 4);
@@ -702,6 +806,71 @@ Licensed under the MIT http://5509.mit-license.org */
       ctx.fillStyle = frontFillStyle;
       ctx.shadowBlur = 0;
       return ctx.fillText(value, canvas_size / 2, canvas_size - 4);
+    };
+
+    Preview.prototype._onRenderPlus = function() {
+      var canvas_size, ctx, fontSize, frontFillStyle, value;
+      value = this.model.get('plus');
+      canvas_size = this.icon_size + this._getCanvasAdjust();
+      fontSize = this.icon_size === 98 ? 22 : 44;
+      ctx = this.ctx;
+      ctx.font = "" + fontSize + "px kurokane";
+      ctx.textAlign = 'right';
+      ctx.verticalAlign = 'top';
+      frontFillStyle = '#f0ff00';
+      ctx.shadowColor = '#000000';
+      ctx.shadowBlur = 0;
+      if (!value) {
+        return;
+      }
+      this.canvas.setAttribute('class', 'large');
+      value = '+' + value;
+      ctx.fillStyle = '#000000';
+      ctx.fillText(value, canvas_size - 12 - 2, 52 + 2 - 4);
+      ctx.fillText(value, canvas_size - 12 - 2, 52 - 2 - 4);
+      ctx.fillText(value, canvas_size - 12 + 2, 52 + 2 - 4);
+      ctx.fillText(value, canvas_size - 12 + 2, 52 - 2 - 4);
+      ctx.fillStyle = frontFillStyle;
+      ctx.shadowBlur = 0;
+      return ctx.fillText(value, canvas_size - 12, 52 - 4);
+    };
+
+    Preview.prototype._onRenderArousal = function() {
+      var adjustLeft, adjustTop, canvas_size, ctx, fontSize, frontFillStyle, value;
+      value = this.model.get('arousal');
+      canvas_size = this.icon_size + this._getCanvasAdjust();
+      fontSize = this.icon_size === 98 ? 22 : 38;
+      ctx = this.ctx;
+      ctx.textAlign = 'right';
+      ctx.verticalAlign = 'top';
+      frontFillStyle = '#f0ff00';
+      ctx.shadowColor = '#000000';
+      ctx.shadowBlur = 0;
+      if (!value) {
+        return;
+      }
+      this.canvas.setAttribute('class', 'large');
+      adjustLeft = -22;
+      adjustTop = 42;
+      if (value === 10) {
+        adjustLeft = -16;
+        adjustTop = 40;
+        fontSize = fontSize - 2;
+        value = '★';
+      }
+      ctx.drawImage(this.model.get('iconArousalImage'), canvas_size - this.model.get('iconArousalImageWidth') + 5, 0, this.model.get('iconArousalImageWidth') - 10, this.model.get('iconArousalImageHeight') - 10);
+      ctx.font = "" + (fontSize + 4) + "px kurokane";
+      ctx.fillStyle = '#000000';
+      ctx.fillText(value, canvas_size + adjustLeft - 2, adjustTop + 3);
+      ctx.fillText(value, canvas_size + adjustLeft - 2, adjustTop - 0);
+      ctx.fillText(value, canvas_size + adjustLeft - 0, adjustTop - 0);
+      ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop + 3);
+      ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop + 2);
+      ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop - 0);
+      ctx.font = "" + fontSize + "px kurokane";
+      ctx.fillStyle = frontFillStyle;
+      ctx.shadowBlur = 0;
+      return ctx.fillText(value, canvas_size + adjustLeft - 1, adjustTop);
     };
 
     return Preview;

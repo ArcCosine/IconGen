@@ -7,6 +7,7 @@ class PIG.Model.App extends Backbone.Model
     scale          : 1
     selected       : false
     iconSrc        : 'images/tirol.jpg'
+    arousalSrc     : 'images/arousal.png'
     iconBaseWidth  : null
     iconBaseHeight : null
     iconBaseImage  : null
@@ -17,6 +18,7 @@ class PIG.Model.App extends Backbone.Model
     frameSrc       : null
     iconFrameImage : null
     noFrame        : false
+    animation      : false
   }
 
   initialize: ->
@@ -25,22 +27,33 @@ class PIG.Model.App extends Backbone.Model
 
   eventify: ->
 
-    @on 'change:main', ->
+    @on 'change:main', =>
       @_setFramePath()
 
-    @on 'change:sub', ->
+    @on 'change:sub', =>
       @_setFramePath()
 
-    @on 'change:noFrame', ->
+    @on 'change:noFrame', =>
       @_setFramePath()
 
-    @on 'change:file', ->
+    @on 'change:file', =>
       @set('type', @get('file').type)
 
-    @on 'change:value', ->
-      value = @get('value')
+    @on 'change:lv', =>
+      value = @get('lv')
       if ( not value )
-        @set('mode', null)
+        @set('lv', null)
+
+    @on 'change:plus', =>
+      value = @get('plus')
+      if ( not value )
+        @set('plus', null)
+
+    @on 'change:arousal', =>
+      value = @get('arousal')
+      if ( not value )
+        @set('arousal', null)
+
 
   _setFramePath: (options) ->
     if ( @get('noFrame') )

@@ -198,6 +198,8 @@ style
     .frame_area .frame_main_area canvas.large {
       width: 104px;
       height: 104px; }
+    .frame_area .frame_main_area img {
+      display: none; }
   .frame_area .frame_double {
     top: 4px;
     left: 1px; }
@@ -424,11 +426,11 @@ style
 .input_group {
   text-align: center; }
 
-.input_plus, .input_level {
+.input_plus, .input_level, .input_arousal {
   margin: 0 auto 5px auto;
   display: inline-block;
-  width: 105px; }
-  .input_plus span, .input_level span {
+  width: 95px; }
+  .input_plus span, .input_level span, .input_arousal span {
     padding-top: 3px;
     margin-right: 5px;
     display: inline-block;
@@ -436,20 +438,30 @@ style
     text-align: right;
     line-height: 1.8;
     font-family: 'kurokane'; }
-  .input_plus input, .input_level input {
+  .input_plus input, .input_level input, .input_arousal input {
     padding: 0 5px 0 5px;
     border: 1px solid #BBB;
     border-radius: 3px;
     -webkit-border-radius: 3px;
-    width: 60px;
+    width: 50px;
     font-size: 16px;
     font-family: 'kurokane';
     -webkit-box-shadow: 0px 3px 3px 0 rgba(200, 200, 200, 0.2) inset;
     -moz-box-shadow: 0px 3px 3px 0 rgba(200, 200, 200, 0.2) inset;
     box-shadow: 0px 3px 3px 0 rgba(200, 200, 200, 0.2) inset; }
 
+.input_plus {
+  width: 85px; }
+  .input_plus span {
+    width: 10px; }
+
 .input_level {
   margin-bottom: 10px; }
+
+.input_arousal {
+  width: 110px; }
+  .input_arousal span {
+    width: 35px; }
 
 .select_size {
   padding-bottom: 10px;
@@ -457,20 +469,34 @@ style
   .select_size span {
     font-family: 'kurokane'; }
 
-.no_frame {
+.no_frame,
+.animation {
   padding-bottom: 10px;
   text-align: center;
   /* SQUARED THREE */ }
-  .no_frame span {
+  .no_frame span,
+  .animation span {
     font-family: 'kurokane'; }
-  .no_frame span, .no_frame .checkbox {
+    .no_frame span.note,
+    .animation span.note {
+      padding: 0 10px;
+      font-size: 12px; }
+  .no_frame strong,
+  .animation strong {
+    color: red; }
+  .no_frame span, .no_frame .checkbox,
+  .animation span,
+  .animation .checkbox {
     display: inline-block; }
-  .no_frame input {
+  .no_frame input,
+  .animation input {
     visibility: hidden; }
-  .no_frame .checkbox {
+  .no_frame .checkbox,
+  .animation .checkbox {
     width: 20px;
     position: relative; }
-  .no_frame .checkbox span {
+  .no_frame .checkbox span,
+  .animation .checkbox span {
     cursor: pointer;
     position: absolute;
     width: 20px;
@@ -488,7 +514,8 @@ style
     background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
     background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 ); }
-  .no_frame .checkbox span:after {
+  .no_frame .checkbox span:after,
+  .animation .checkbox span:after {
     opacity: 0.1;
     content: '';
     position: absolute;
@@ -505,9 +532,11 @@ style
     -o-transform: rotate(-45deg);
     -ms-transform: rotate(-45deg);
     transform: rotate(-45deg); }
-  .no_frame .checkbox span:hover::after {
+  .no_frame .checkbox span:hover::after,
+  .animation .checkbox span:hover::after {
     opacity: 0.3; }
-  .no_frame .checkbox input[type=checkbox]:checked + span:after {
+  .no_frame .checkbox input[type=checkbox]:checked + span:after,
+  .animation .checkbox input[type=checkbox]:checked + span:after {
     opacity: 1; }
 
 .btn_download > a {
