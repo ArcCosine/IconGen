@@ -1,4 +1,4 @@
-/*! IconGen for Puzzle & Dragons - v2.2.0 - 2014-01-22 3:30:10
+/*! IconGen for Puzzle & Dragons - v2.2.0 - 2014-01-22 17:13:06
 http://5509.github.io/IconGen * Copyright (c) 2014 Kazunori Tokuda;
 Licensed under the MIT http://5509.mit-license.org */
 (function() {
