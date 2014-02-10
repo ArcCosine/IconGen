@@ -408,11 +408,7 @@ class PIG.View.Preview extends Backbone.View
     ctx.shadowColor = '#000000'
     ctx.shadowBlur = 0
 
-    #if ( not mode )
-    #  @canvas.setAttribute('class', 'default')
-    #  return
     if ( not value )
-      #@canvas.setAttribute('class', 'default')
       return
     @canvas.setAttribute('class', 'large')
 
@@ -424,14 +420,14 @@ class PIG.View.Preview extends Backbone.View
 
     ctx.fillStyle = '#000000'
     # 文字外枠
-    ctx.fillText(value, canvas_size/2 - 2, canvas_size + 2 - 4)
-    ctx.fillText(value, canvas_size/2 - 2, canvas_size - 2 - 4)
-    ctx.fillText(value, canvas_size/2 + 2, canvas_size + 2 - 4)
-    ctx.fillText(value, canvas_size/2 + 2, canvas_size - 2 - 4)
+    ctx.fillText(value, canvas_size/2 - 2, canvas_size + 2 - 4, 120)
+    ctx.fillText(value, canvas_size/2 - 2, canvas_size - 2 - 4, 120)
+    ctx.fillText(value, canvas_size/2 + 2, canvas_size + 2 - 4, 120)
+    ctx.fillText(value, canvas_size/2 + 2, canvas_size - 2 - 4, 120)
 
     ctx.fillStyle = frontFillStyle
     ctx.shadowBlur = 0
-    ctx.fillText(value, canvas_size/2, canvas_size - 4)
+    ctx.fillText(value, canvas_size/2, canvas_size - 4, 120)
 
   _onRenderPlus: ->
     value = @model.get('plus')

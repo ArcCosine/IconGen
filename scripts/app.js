@@ -1,4 +1,4 @@
-/*! IconGen for Puzzle & Dragons - v2.2.0 - 2014-01-22 17:13:06
+/*! IconGen for Puzzle & Dragons - v2.2.0 - 2014-02-10 18:31:53
 http://5509.github.io/IconGen * Copyright (c) 2014 Kazunori Tokuda;
 Licensed under the MIT http://5509.mit-license.org */
 (function() {
@@ -799,13 +799,13 @@ Licensed under the MIT http://5509.mit-license.org */
       }
       value = 'Lv.' + value;
       ctx.fillStyle = '#000000';
-      ctx.fillText(value, canvas_size / 2 - 2, canvas_size + 2 - 4);
-      ctx.fillText(value, canvas_size / 2 - 2, canvas_size - 2 - 4);
-      ctx.fillText(value, canvas_size / 2 + 2, canvas_size + 2 - 4);
-      ctx.fillText(value, canvas_size / 2 + 2, canvas_size - 2 - 4);
+      ctx.fillText(value, canvas_size / 2 - 2, canvas_size + 2 - 4, 120);
+      ctx.fillText(value, canvas_size / 2 - 2, canvas_size - 2 - 4, 120);
+      ctx.fillText(value, canvas_size / 2 + 2, canvas_size + 2 - 4, 120);
+      ctx.fillText(value, canvas_size / 2 + 2, canvas_size - 2 - 4, 120);
       ctx.fillStyle = frontFillStyle;
       ctx.shadowBlur = 0;
-      return ctx.fillText(value, canvas_size / 2, canvas_size - 4);
+      return ctx.fillText(value, canvas_size / 2, canvas_size - 4, 120);
     };
 
     Preview.prototype._onRenderPlus = function() {
