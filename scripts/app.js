@@ -1,4 +1,4 @@
-/*! IconGen for Puzzle & Dragons - v2.2.0 - 2014-02-10 18:31:53
+/*! IconGen for Puzzle & Dragons - v2.2.0 - 2014-02-21 5:57:55
 http://5509.github.io/IconGen * Copyright (c) 2014 Kazunori Tokuda;
 Licensed under the MIT http://5509.mit-license.org */
 (function() {
@@ -853,7 +853,7 @@ Licensed under the MIT http://5509.mit-license.org */
       adjustLeft = -22;
       adjustTop = 42;
       if (value === 10) {
-        adjustLeft = -16;
+        adjustLeft = -18;
         adjustTop = 40;
         fontSize = fontSize - 2;
         value = '★';
@@ -861,16 +861,16 @@ Licensed under the MIT http://5509.mit-license.org */
       ctx.drawImage(this.model.get('iconArousalImage'), canvas_size - this.model.get('iconArousalImageWidth') + 5, 0, this.model.get('iconArousalImageWidth') - 10, this.model.get('iconArousalImageHeight') - 10);
       ctx.font = "" + (fontSize + 4) + "px kurokane";
       ctx.fillStyle = '#000000';
-      ctx.fillText(value, canvas_size + adjustLeft - 2, adjustTop + 3);
-      ctx.fillText(value, canvas_size + adjustLeft - 2, adjustTop - 0);
-      ctx.fillText(value, canvas_size + adjustLeft - 0, adjustTop - 0);
-      ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop + 3);
-      ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop + 2);
-      ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop - 0);
+      ctx.fillText(value, canvas_size + adjustLeft - 2, adjustTop + 3, fontSize - 3);
+      ctx.fillText(value, canvas_size + adjustLeft - 2, adjustTop - 0, fontSize - 3);
+      ctx.fillText(value, canvas_size + adjustLeft - 0, adjustTop - 0, fontSize - 3);
+      ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop + 3, fontSize - 3);
+      ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop + 2, fontSize - 3);
+      ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop - 0, fontSize - 3);
       ctx.font = "" + fontSize + "px kurokane";
       ctx.fillStyle = frontFillStyle;
       ctx.shadowBlur = 0;
-      return ctx.fillText(value, canvas_size + adjustLeft - 1, adjustTop);
+      return ctx.fillText(value, canvas_size + adjustLeft - 1, adjustTop, fontSize - 3);
     };
 
     return Preview;

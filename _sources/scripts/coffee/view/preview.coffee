@@ -485,7 +485,7 @@ class PIG.View.Preview extends Backbone.View
     adjustTop = 42
 
     if ( value is 10 )
-      adjustLeft = -16
+      adjustLeft = -18
       adjustTop = 40
       fontSize = fontSize - 2
       value = '★'
@@ -501,14 +501,14 @@ class PIG.View.Preview extends Backbone.View
     ctx.font = "#{fontSize+4}px kurokane"
     ctx.fillStyle = '#000000'
     # 文字外枠
-    ctx.fillText(value, canvas_size + adjustLeft - 2, adjustTop + 3)
-    ctx.fillText(value, canvas_size + adjustLeft - 2, adjustTop - 0)
-    ctx.fillText(value, canvas_size + adjustLeft - 0, adjustTop - 0)
-    ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop + 3)
-    ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop + 2)
-    ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop - 0)
+    ctx.fillText(value, canvas_size + adjustLeft - 2, adjustTop + 3, fontSize - 3)
+    ctx.fillText(value, canvas_size + adjustLeft - 2, adjustTop - 0, fontSize - 3)
+    ctx.fillText(value, canvas_size + adjustLeft - 0, adjustTop - 0, fontSize - 3)
+    ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop + 3, fontSize - 3)
+    ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop + 2, fontSize - 3)
+    ctx.fillText(value, canvas_size + adjustLeft + 2, adjustTop - 0, fontSize - 3)
 
     ctx.font = "#{fontSize}px kurokane"
     ctx.fillStyle = frontFillStyle
     ctx.shadowBlur = 0
-    ctx.fillText(value, canvas_size + adjustLeft - 1, adjustTop)
+    ctx.fillText(value, canvas_size + adjustLeft - 1, adjustTop, fontSize - 3)
