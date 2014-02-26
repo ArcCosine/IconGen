@@ -117,6 +117,19 @@ style
   }
 }
 
+.forAndroid {
+  display: none;
+  padding: 5px 10px;
+  font-size: 13px;
+  color: #333;
+  background: #ccc;
+
+  .close {
+    display: block;
+    padding-top: 5px;
+  }
+}
+
 .banner {
   text-align: center;
   clear: left;

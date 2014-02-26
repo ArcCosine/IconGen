@@ -14,3 +14,8 @@ PIG.isMobile = ->
   if ( /iPhone|iPad|Android/.test(ua) )
     return true
   return false
+
+PIG.isAndroid = ->
+  ua = navigator.userAgent
+  if ( /Android/.test(ua) )
+    return true

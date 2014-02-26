@@ -109,6 +109,16 @@ style
     margin-left: 1.5em;
     padding-bottom: 10px; }
 
+.forAndroid {
+  display: none;
+  padding: 5px 10px;
+  font-size: 13px;
+  color: #333;
+  background: #ccc; }
+  .forAndroid .close {
+    display: block;
+    padding-top: 5px; }
+
 .banner {
   text-align: center;
   clear: left; }

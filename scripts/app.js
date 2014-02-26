@@ -1,4 +1,4 @@
-/*! IconGen for Puzzle & Dragons - v2.2.0 - 2014-02-21 5:57:55
+/*! IconGen for Puzzle & Dragons - v2.2.0 - 2014-02-26 16:29:36
 http://5509.github.io/IconGen * Copyright (c) 2014 Kazunori Tokuda;
 Licensed under the MIT http://5509.mit-license.org */
 (function() {
@@ -23,6 +23,14 @@ Licensed under the MIT http://5509.mit-license.org */
       return true;
     }
     return false;
+  };
+
+  PIG.isAndroid = function() {
+    var ua;
+    ua = navigator.userAgent;
+    if (/Android/.test(ua)) {
+      return true;
+    }
   };
 
 }).call(this);
@@ -68,6 +76,14 @@ Licensed under the MIT http://5509.mit-license.org */
       }
       if (PIG.isMobile()) {
         $('html').addClass('sp');
+      }
+      if (PIG.isAndroid() && !window.localStorage.getItem('forAndroidClose')) {
+        $('.forAndroid').show();
+        $('.close').click(function(ev) {
+          ev.preventDefault();
+          $('.forAndroid').hide();
+          return window.localStorage.setItem('forAndroidClose', true);
+        });
       }
       webfontText = 'Lv.0123456789最大+と覚醒交互に（Tt設定不可★ダウンロードお@shimaelrw写真をえらぶ拡待ちくださいアイコンの大きフレーム外す注意）両方部分が切り替わるなま、はでせん。チェック状態位置調整た端末よてオ著し動作遅ったしこもか諦め…';
       return FONTPLUS.load([
