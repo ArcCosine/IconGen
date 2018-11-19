@@ -239,6 +239,19 @@ Licensed under the MIT http://5509.mit-license.org */
       this.$textPlus = this.$el.find('[data-pig-target="plus"]');
       this.$textArousal = this.$el.find('[data-pig-target="arousal"]');
       this._initReader();
+
+        //initialize
+    this.$textLv.val(99);
+    this.$textPlus.val(297);
+    //this.$textArousal.val(10);
+
+          this.model.set('lv', 99);
+          this.model.set('plus', 297);
+          //this.model.set('arousal', 10);
+
+        //暫定
+        this.model.set('animation', false);
+
       return this._eventify();
     };
 
@@ -330,8 +343,8 @@ Licensed under the MIT http://5509.mit-license.org */
       if (target === 'lv') {
         if (value < 1) {
           value = 1;
-        } else if (99 < value) {
-          value = 99;
+        } else if (110 < value) {
+          value = 110;
           $input.val(value);
         }
       } else if (target === 'plus') {

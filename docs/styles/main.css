@@ -119,11 +119,6 @@ style
     display: block;
     padding-top: 5px; }
 
-.banner {
-  text-align: center;
-  clear: left; }
-  .banner:first-child {
-    margin: 0; }
 
 .logo, .btn_area, .frame_area {
   margin: 0 auto;
@@ -439,6 +434,9 @@ style
   margin: 0 auto 5px auto;
   display: inline-block;
   width: 95px; }
+  .input_arousal {
+    display: none;
+  }
   .input_plus span, .input_level span, .input_arousal span {
     padding-top: 3px;
     margin-right: 5px;
@@ -622,10 +620,6 @@ style
     .footer .news dd {
       margin-left: 90px;
       padding-top: 5px; }
-  .footer .sns_btn {
-    padding: 15px 0 35px 0; }
-    .footer .sns_btn li {
-      float: left; }
   .footer .credit {
     margin-bottom: 0;
     padding-top: 10px;
@@ -681,20 +675,9 @@ style
 iPhone
 --------------------------------*/
 @media screen and (min-width: 0px) and (max-width: 400px) {
-  .banner img {
-    width: 300px; }
-
   .footer .inner {
     width: 290px; }
-  .footer .sns_btn {
-    padding: 10px 0 5px 0;
-    text-align: center; }
-    .footer .sns_btn li {
-      margin-bottom: 12px;
-      float: none; } }
+ }
 @media screen and (min-width: 401px) and (max-width: 700px) {
-  .banner img {
-    width: 460px; }
-
   .footer .inner {
     width: 450px; } }
