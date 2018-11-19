@@ -86,16 +86,7 @@ Licensed under the MIT http://5509.mit-license.org */
         });
       }
       webfontText = 'Lv.0123456789最大+と覚醒交互に（Tt設定不可★ダウンロードお@shimaelrw写真をえらぶ拡待ちくださいアイコンの大きフレーム外す注意）両方部分が切り替わるなま、はでせん。チェック状態位置調整た端末よてオ著し動作遅ったしこもか諦め…';
-      return FONTPLUS.load([
-        {
-          fontname: 'KurokaneStd-EB',
-          nickname: 'kurokane',
-          text: webfontText + 'aAあ'
-        }
-      ], function() {
-        var view;
-        return view = new PIG.View.App();
-      });
+      return new PIG.View.App();
     };
 
     Initializer.prototype.notSupported = '<div class="not-supported">\n  <p>パズドラ風アイコンジェネレーターは<br>\n  お使いの端末には対応していません。<br>\n  対応端末は以下の通りです。</p>\n  <h3>PC/Mac</h3>\n  <ul>\n    <li>Google Chromeの最新版</li>\n    <li>Safariの最新版</li>\n    <li>Firefoxの最新版</li>\n  </ul>\n  <h3>モバイル端末</h3>\n  <ul>\n    <li>iOS6以上のSafari</li>\n    <li>Android4.x以上の標準ブラウザ</li>\n  </ul>\n  <p>お手数ですが、対応端末でご利用ください。</p>\n</div>';

@@ -2,29 +2,11 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <title>パズドラ風アイコンジェネレーター ver.2</title>
+  <title>パズドラ風アイコンジェネレーター Next Generation</title>
   <meta name="description" content="パズル＆ドラゴンズ風のモンスターアイコンが作れます。プラスやレベル表記は好みにあわせて、オリジナルフレームもあります。Twitter等に使ってね。">
   <meta name="viewport" content="width=device-width">
-  <meta property="og:image" content="http://5509.github.io/IconGen/og.png">
+  <meta property="og:image" content="http://arccosine.github.io/IconGen/og.png">
   <link rel="stylesheet" href="styles/main.css">
-  <script src="http://webfont.fontplus.jp/accessor/script/fontplus.js?El7q9AJq3dU%3D" charset="utf-8"></script>
-  <script>
-    (function(FONTPLUS) {
-     // 非同期モード
-      FONTPLUS.async()
-    }(this.FONTPLUS));
-  </script>
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-4011945-9']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
   <script src="scripts/lib.js"></script>
   <script src="scripts/app.js"></script>
 </head>
@@ -37,22 +19,6 @@
   </div>
   <div class="logo"><img src="images/logo.png" alt="パズドラ風アイコンジェネレータ ver2" width="267"></div>
   <div class="banner">
-    <script>
-    if ( PIG.isMobile() ) {
-      google_ad_client = "ca-pub-2250259658901185";
-      /* パズドラモバイル */
-      google_ad_slot = "9459562146";
-      google_ad_width = 320;
-      google_ad_height = 50;
-    } else {
-      google_ad_client = "ca-pub-2250259658901185";
-      /* パズドラ */
-      google_ad_slot = "2163420549";
-      google_ad_width = 468;
-      google_ad_height = 60;
-    }
-    </script>
-    <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
   </div>
   <div class="btn_area">
     <a class="btn_flame" href="#" data-pig-frame="flame"><img src="images/btn_flame.png" alt="火属性"></a>
@@ -84,7 +50,7 @@
   <div class="select_photo"><input type="file"></div>
   <div class="scale_photo"><span>拡大</span><input type="range" min="1" max="10" step="0.1" value="1"></div>
   <div class="input_group">
-    <div class="input_level"><span>Lv</span><input type="number" min="1" max="99" data-pig-target="lv"></div>
+    <div class="input_level"><span>Lv</span><input type="number" min="1" max="110" data-pig-target="lv"></div>
     <div class="input_plus"><span>+</span><input type="number" min="1" max="297" data-pig-target="plus"></div>
     <div class="input_arousal"><span>覚醒</span><input type="number" min="1" max="10" data-pig-target="arousal"></div>
   </div>
@@ -96,40 +62,17 @@
       </div>
     </label>
   </div>
-  <div class="animation">
-    <label><span>+と覚醒を交互に（Twitterに設定不可</span>
-      <div class="checkbox">
-        <input type="checkbox" class="animation">
-        <span></span>
-      </div>
-    </label>
-    <span class="note">注意）+と覚醒を両方設定でき、交互に切り替わるアイコンになりますが、Twitterには設定できません。チェック状態ではアイコンの位置調整もできません。動かなかったら諦めてください…<strong>また端末によってはオンにすると著しく動作が遅くなったり、動作しなくなることもあります。</strong></span>
-  </div>
   <div class="btn_download disabled"><a href="javascript:void(0)" class="download">ダウンロード</a></div>
 </div><!-- // App -->
 
 <div class="banner">
-  <script>
-  if ( PIG.isMobile() ) {
-    google_ad_client = "ca-pub-2250259658901185";
-    /* パズドラモバイル */
-    google_ad_slot = "9459562146";
-    google_ad_width = 320;
-    google_ad_height = 50;
-  } else {
-    google_ad_client = "ca-pub-2250259658901185";
-    /* パズドラ */
-    google_ad_slot = "2163420549";
-    google_ad_width = 468;
-    google_ad_height = 60;
-  }
-  </script>
-  <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 </div>
 <div class="footer">
   <div class="inner">
     <p>パズル＆ドラゴンズのモンスターアイコンみたいなアイコンジェネレータです。Twitterのアイコン等に使ってね。</p>
     <dl class="news">
+      <dt>2018-11-20</dt>
+      <dd>Forkして、適当にJSやHTMLを修正した</dd>
       <dt>2014-02-09</dt>
       <dd>最大レベルの時の表示幅をアプリに合わせました。</dd>
       <dt>2014-01-21</dt>
@@ -150,9 +93,6 @@
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
       </li>
       <li>
-        <g:plusone size="medium" href="http://5509.github.com/IconGen/"></g:plusone><script type="text/javascript">(function(){var po=document.createElement("script");po.type="text/javascript";po.async=true;po.src="https://apis.google.com/js/plusone.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(po,s);})();</script>
-      </li>
-      <li>
         <div id="fb-root"></div>
           <script>(function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
@@ -166,22 +106,6 @@
     </ul>
   </div>
   <div class="banner">
-    <script>
-    if ( PIG.isMobile() ) {
-      google_ad_client = "ca-pub-2250259658901185";
-      /* パズドラモバイル */
-      google_ad_slot = "9459562146";
-      google_ad_width = 320;
-      google_ad_height = 50;
-    } else {
-      google_ad_client = "ca-pub-2250259658901185";
-      /* パズドラ */
-      google_ad_slot = "2163420549";
-      google_ad_width = 468;
-      google_ad_height = 60;
-    }
-    </script>
-    <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
   </div>
   <p class="credit"><a href="https://twitter.com/5509">@5509</a>, <a href="https://twitter.com/shimael">@shimael</a>, <a href="https://twitter.com/rewish">@rewish</a>(ver.1)</p>
 </div>
